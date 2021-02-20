@@ -1,0 +1,1 @@
+drop table if exists ST_CUSTOMER__U52066 cascade ;

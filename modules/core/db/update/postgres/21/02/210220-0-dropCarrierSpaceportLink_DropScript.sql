@@ -1,0 +1,1 @@
+drop table if exists ST_CARRIER_SPACEPORT_LINK__U72106 cascade ;

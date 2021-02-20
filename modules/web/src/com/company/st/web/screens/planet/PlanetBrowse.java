@@ -11,6 +11,7 @@ import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.st.entity.Planet;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -37,19 +38,20 @@ public class PlanetBrowse extends StandardLookup<Planet> {
     private DataManager dataManager;
     @Inject
     private DataContext dataContext;
+    @Inject
+    private Logger log;
 
     private void processfile(File file)
     {
-        int defLength=0, newLength=0;
+        int defLength, newLength;
         List<Planet> defaultPlanetList= planetsDc.getMutableItems();
         List<Planet> planetList = null;
-        dataContext.merge(defaultPlanetList);
         try {
             planetList=csvService.getPlanets(file);
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            log.error("Error", ioException);
         }
-
+        assert planetList != null;
         newLength = planetList.size();
         Planet newPlanet, defPlanet;
         boolean change=false;
@@ -72,7 +74,7 @@ public class PlanetBrowse extends StandardLookup<Planet> {
                 change=false;
         }
 
-        dataContext.commit();
+        //nees to commit changes of planetsDc
     }
 
 
@@ -86,7 +88,7 @@ public class PlanetBrowse extends StandardLookup<Planet> {
         try {
             fileUploadingAPI.deleteFile(fileId);
         } catch (FileStorageException ex) {
-            throw new RuntimeException(ex);
+            log.error("Error", ex);
         }
     }
 

@@ -1,23 +1,20 @@
 package com.company.st.entity;
 
-import com.haulmont.chile.core.annotations.NamePattern;
+import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.NumberFormat;
-import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.EmbeddableEntity;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
-@Table(name = "ST_COORDINATES")
-@Entity(name = "st_Coordinates")
-@NamePattern("%s %s|latitude,longtitude")
-public class Coordinates extends StandardEntity {
+@MetaClass(name = "st_Coordinates")
+@Embeddable
+public class Coordinates extends EmbeddableEntity {
     private static final long serialVersionUID = -2327920420596891354L;
-
     @NumberFormat(pattern = "###.000000", decimalSeparator = ",")
     @NotNull
     @Column(name = "LATITUDE", nullable = false)

@@ -9,5 +9,12 @@
         <class>com.company.st.entity.AtmosphericGas</class>
         <class>com.company.st.entity.Moon</class>
         <class>com.company.st.entity.Coordinates</class>
+        <class>com.company.st.entity.Customer</class>
+        <class>com.company.st.entity.WaybillItem</class>
+        <class>com.company.st.entity.Discount</class>
+        <class>com.company.st.entity.Spaceport</class>
+        <class>com.company.st.entity.Carrier</class>
+        <class>com.company.st.entity.Dimensions</class>
+        <class>com.company.st.entity.Waybill</class>
     </persistence-unit>
 </persistence>

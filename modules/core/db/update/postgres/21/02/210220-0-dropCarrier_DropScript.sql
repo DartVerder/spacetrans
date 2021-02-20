@@ -1,0 +1,1 @@
+drop table if exists ST_CARRIER__U66312 cascade ;

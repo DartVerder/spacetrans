@@ -1,0 +1,1 @@
+drop table if exists ST_DISCOUNT__U30459 cascade ;

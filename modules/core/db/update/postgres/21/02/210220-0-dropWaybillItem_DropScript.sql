@@ -1,0 +1,1 @@
+drop table if exists ST_WAYBILL_ITEM__U05917 cascade ;

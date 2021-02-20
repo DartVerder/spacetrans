@@ -1,0 +1,1 @@
+drop table if exists ST_SPACEPORT__U21138 cascade ;

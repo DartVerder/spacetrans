@@ -1,0 +1,1 @@
+alter table st_carrier_spaceport_link rename to ST_CARRIER_SPACEPORT_LINK__U72106 ;
