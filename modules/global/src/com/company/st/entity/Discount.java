@@ -21,6 +21,17 @@ public class Discount extends StandardEntity {
     @Column(name = "VALUE_", nullable = false)
     private BigDecimal value;
 
+    @Column(name = "GRADE")
+    private Integer grade;
+
+    public CustomerGrade getGrade() {
+        return grade == null ? null : CustomerGrade.fromId(grade);
+    }
+
+    public void setGrade(CustomerGrade grade) {
+        this.grade = grade == null ? null : grade.getId();
+    }
+
     public BigDecimal getValue() {
         return value;
     }

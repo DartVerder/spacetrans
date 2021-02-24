@@ -16,5 +16,7 @@
         <class>com.company.st.entity.Carrier</class>
         <class>com.company.st.entity.Dimensions</class>
         <class>com.company.st.entity.Waybill</class>
+        <class>com.company.st.entity.Company</class>
+        <class>com.company.st.entity.Individual</class>
     </persistence-unit>
 </persistence>

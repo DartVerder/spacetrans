@@ -1,0 +1,1 @@
+drop table if exists ST_INDIVIDUAL__U51274 cascade ;

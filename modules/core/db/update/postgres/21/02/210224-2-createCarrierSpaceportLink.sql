@@ -1,0 +1,2 @@
+alter table ST_CARRIER_SPACEPORT_LINK add constraint FK_CARSPA_ON_SPACEPORT foreign key (SPACEPORT_ID) references ST_SPACEPORT(ID);
+alter table ST_CARRIER_SPACEPORT_LINK add constraint FK_CARSPA_ON_CARRIER foreign key (CARRIER_ID) references ST_CARRIER(ID);
