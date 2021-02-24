@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
 
+    <view entity="st_Spaceport" name="spaceport-view" extends="_local">
+        <property name="planet" view="_minimal"/>
+        <property name="moon" view="_minimal"/>
+        <property name="coordinates" view="_minimal">
+            <property name="latitude"/>
+            <property name="longtitude"/>
+        </property>
+    </view>
+    <view entity="st_WaybillItem" name="waybillItem-view" extends="_local">
+        <property name="dim" view="_minimal">
+            <property name="length"/>
+            <property name="width"/>
+            <property name="height"/>
+        </property>
+    </view>
+    <view entity="st_Waybill" name="waybill-view" extends="_local">
+        <property name="creator" view="_minimal"/>
+        <property name="shipper" view="_minimal"/>
+        <property name="consignee" view="_minimal"/>
+        <property name="departurePort" view="_minimal"/>
+        <property name="destinationPort" view="_minimal"/>
+        <property name="carrier" view="_minimal"/>
+    </view>
+    <view entity="st_Planet" name="planet-view" extends="_local">
+        <property name="atmosphere" view="_minimal"/>
+        <property name="picture" view="_minimal"/>
+    </view>
+    <view entity="st_Carrier" name="carrier-view" extends="_local">
+        <property name="ports" view="_minimal"/>
+    </view>
+    <view entity="st_Customer" name="customer-view" extends="_local"/>
+    <view entity="st_Company" name="company-view" extends="_local"/>
+    <view entity="st_Individual" name="individual-view" extends="_local"/>
 </views>

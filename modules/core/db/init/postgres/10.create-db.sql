@@ -156,8 +156,8 @@ create table ST_SPACEPORT (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    LATITUDE double precision not null,
-    LONGTITUDE double precision not null,
+    COORDINATES_LATITUDE double precision not null,
+    COORDINATES_LONGTITUDE double precision not null,
     --
     NAME varchar(255) not null,
     PLANET_ID uuid,

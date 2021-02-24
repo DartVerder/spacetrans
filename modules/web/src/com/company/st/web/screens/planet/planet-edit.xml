@@ -4,13 +4,8 @@
         focusComponent="form"
         messagesPack="com.company.st.web.screens.planet">
     <data>
-        <instance id="planetDc"
-                  class="com.company.st.entity.Planet">
-            <view extends="_local">
-                <property name="atmosphere" view="_minimal"/>
-                <property name="picture" view="_minimal"/>
-            </view>
-            <loader/>
+        <instance id="planetDc" class="com.company.st.entity.Planet" view="planet-view">
+            <loader id="planetDl"/>
         </instance>
     </data>
     <dialogMode height="600"

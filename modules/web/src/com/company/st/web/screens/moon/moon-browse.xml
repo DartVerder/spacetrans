@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://spaceportBrowse.caption"
-        focusComponent="spaceportsTable"
-        messagesPack="com.company.st.web.screens.spaceport">
+        caption="msg://moonBrowse.caption"
+        focusComponent="moonsTable"
+        messagesPack="com.company.st.web.screens.moon">
     <data readOnly="true">
-        <collection id="spaceportsDc" class="com.company.st.entity.Spaceport" view="spaceport-view">
-            <loader id="spaceportsDl">
+        <collection id="moonsDc"
+                    class="com.company.st.entity.Moon">
+            <view extends="_local"/>
+            <loader id="moonsDl">
                 <query>
-                    <![CDATA[select e from st_Spaceport e]]>
+                    <![CDATA[select e from st_Moon e]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="spaceportsTable"
+    <layout expand="moonsTable"
             spacing="true">
         <filter id="filter"
-                applyTo="spaceportsTable"
-                dataLoader="spaceportsDl">
+                applyTo="moonsTable"
+                dataLoader="moonsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="spaceportsTable"
+        <groupTable id="moonsTable"
                     width="100%"
-                    dataContainer="spaceportsDc">
+                    dataContainer="moonsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -32,18 +34,14 @@
             </actions>
             <columns>
                 <column id="name"/>
-                <column id="planet"/>
-                <column id="moon"/>
-                <column id="isDefault"/>
-                <column id="coordinates.latitude"/>
-                <column id="coordinates.longtitude"/>
+                <column id="mass"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="spaceportsTable.create"/>
-                <button id="editBtn" action="spaceportsTable.edit"/>
-                <button id="removeBtn" action="spaceportsTable.remove"/>
+                <button id="createBtn" action="moonsTable.create"/>
+                <button id="editBtn" action="moonsTable.edit"/>
+                <button id="removeBtn" action="moonsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

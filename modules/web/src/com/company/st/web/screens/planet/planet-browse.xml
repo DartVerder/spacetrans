@@ -4,10 +4,8 @@
         caption="msg://planetBrowse.caption"
         focusComponent="planetsTable"
         messagesPack="com.company.st.web.screens.planet">
-    <data readOnly="true">
-        <collection id="planetsDc"
-                    class="com.company.st.entity.Planet">
-            <view extends="_local"/>
+    <data readOnly="false">
+        <collection id="planetsDc" class="com.company.st.entity.Planet" view="planet-view">
             <loader id="planetsDl">
                 <query>
                     <![CDATA[select e from st_Planet e]]>

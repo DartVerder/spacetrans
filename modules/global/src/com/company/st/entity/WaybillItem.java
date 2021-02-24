@@ -40,6 +40,14 @@ public class WaybillItem extends StandardEntity {
     @JoinColumn(name = "WAYBILL_ID")
     private Waybill waybill;
 
+    public Dimensions getDim() {
+        return dim;
+    }
+
+    public void setDim(Dimensions dim) {
+        this.dim = dim;
+    }
+
     public Waybill getWaybill() {
         return waybill;
     }
@@ -54,10 +62,6 @@ public class WaybillItem extends StandardEntity {
 
     public void setCharge(BigDecimal charge) {
         this.charge = charge;
-    }
-
-    public Dimensions getDim() {
-        return dim;
     }
 
     public Double getWeight() {

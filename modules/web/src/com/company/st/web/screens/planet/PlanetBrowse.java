@@ -1,13 +1,14 @@
 package com.company.st.web.screens.planet;
 
+import com.company.st.entity.Customer;
 import com.company.st.service.CsvService;
+import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.gui.components.FileUploadField;
 import com.haulmont.cuba.gui.components.LayoutClickNotifier;
-import com.haulmont.cuba.gui.model.CollectionContainer;
-import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.model.DataContext;
+import com.haulmont.cuba.gui.model.*;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.st.entity.Planet;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
@@ -16,7 +17,9 @@ import org.slf4j.Logger;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -40,6 +43,8 @@ public class PlanetBrowse extends StandardLookup<Planet> {
     private DataContext dataContext;
     @Inject
     private Logger log;
+    @Inject
+    private DataComponents dataComponents;
 
     private void processfile(File file)
     {
@@ -59,23 +64,32 @@ public class PlanetBrowse extends StandardLookup<Planet> {
         {
             defLength = defaultPlanetList.size();
             newPlanet = planetList.get(i);
+
             for(int j=0;j<defLength;j++)
             {
                 defPlanet = defaultPlanetList.get(j);
                 change=newPlanet.getName().equals(defPlanet.getName());
                 if(change) {
-                    defaultPlanetList.set(j, newPlanet);
+                    defPlanet=dataContext.merge(defPlanet);
+                    planetsDc.getMutableItems().set(j,newPlanet);
+                    dataContext.setModified(defPlanet,true);
                     break;
                 }
             }
-            if(!change)
-                defaultPlanetList.add(newPlanet);
+            if(!change) {
+                newPlanet = dataContext.merge(newPlanet);
+                planetsDc.getMutableItems().add(newPlanet);
+            }
             else
                 change=false;
         }
 
-        //nees to commit changes of planetsDc
+        dataContext.commit();
+        getScreenData().loadAll();
+
+        //need to commit changes of planetsDc
     }
+
 
 
 
@@ -98,5 +112,12 @@ public class PlanetBrowse extends StandardLookup<Planet> {
     @Subscribe(id = "planetsDc", target = Target.DATA_CONTAINER)
     public void onPlanetsDcCollectionChange(CollectionContainer.CollectionChangeEvent<Planet> event) {
 
+    }
+
+    @Subscribe(id = "planetsDc", target = Target.DATA_CONTAINER)
+    private void onPlanetDcCollectionChange(CollectionContainer.CollectionChangeEvent<Planet> event) {
+        CollectionChangeType changeType = event.getChangeType();
+        Collection<? extends Planet> changes = event.getChanges();
+        // ...
     }
 }

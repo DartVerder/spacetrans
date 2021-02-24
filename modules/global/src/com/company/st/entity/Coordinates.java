@@ -15,14 +15,14 @@ import javax.validation.constraints.Digits;
 public class Coordinates extends EmbeddableEntity {
     private static final long serialVersionUID = -2327920420596891354L;
 
-    @NumberFormat(pattern = "###.000000", decimalSeparator = ",")
+    @NumberFormat(pattern = "##0.000000", decimalSeparator = ",")
     @Column(name = "LATITUDE", nullable = false)
     @DecimalMin("-90")
     @DecimalMax("90")
     @Digits(integer = 3, fraction = 6)
     private Double latitude;
 
-    @NumberFormat(pattern = "###.000000", decimalSeparator = ",")
+    @NumberFormat(pattern = "##0.000000", decimalSeparator = ",")
     @Column(name = "LONGTITUDE", nullable = false)
     @DecimalMin("-180")
     @DecimalMax("180")

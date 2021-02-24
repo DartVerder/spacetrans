@@ -2,6 +2,7 @@ package com.company.st.entity;
 
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.EmbeddedParameters;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,19 +29,28 @@ public class Spaceport extends StandardEntity {
     @Column(name = "IS_DEFAULT")
     private Boolean isDefault;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "latitude", column = @Column(name = "LATITUDE")),
-            @AttributeOverride(name = "longtitude", column = @Column(name = "LONGTITUDE"))
-    })
-    protected Coordinates coordinates;
 
+    @Embedded
+    @EmbeddedParameters(nullAllowed = false)
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "COORDINATES_LATITUDE")),
+            @AttributeOverride(name = "longtitude", column = @Column(name = "COORDINATES_LONGTITUDE"))
+    })
+    private Coordinates coordinates;
 
     @JoinTable(name = "ST_CARRIER_SPACEPORT_LINK",
             joinColumns = @JoinColumn(name = "SPACEPORT_ID"),
             inverseJoinColumns = @JoinColumn(name = "CARRIER_ID"))
     @ManyToMany
     private List<Carrier> carriers;
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 
     public Boolean getIsDefault() {
         return isDefault;
@@ -80,10 +90,6 @@ public class Spaceport extends StandardEntity {
 
     public void setCarriers(List<Carrier> carriers) {
         this.carriers = carriers;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
     }
 
 

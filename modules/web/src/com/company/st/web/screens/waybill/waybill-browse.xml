@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://waybillBrowse.caption"
+        focusComponent="waybillsTable"
+        messagesPack="com.company.st.web.screens.waybill">
+    <data readOnly="true">
+        <collection id="waybillsDc"
+                    class="com.company.st.entity.Waybill">
+            <view extends="waybill-view"/>
+            <loader id="waybillsDl">
+                <query>
+                    <![CDATA[select e from st_Waybill e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="waybillsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="waybillsTable"
+                dataLoader="waybillsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="waybillsTable"
+                    width="100%"
+                    dataContainer="waybillsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="reference"/>
+                <column id="creator"/>
+                <column id="shipper"/>
+                <column id="consignee"/>
+                <column id="departurePort"/>
+                <column id="destinationPort"/>
+                <column id="carrier"/>
+                <column id="totalCharge"/>
+                <column id="totalWeight"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="waybillsTable.create"/>
+                <button id="editBtn" action="waybillsTable.edit"/>
+                <button id="removeBtn" action="waybillsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
