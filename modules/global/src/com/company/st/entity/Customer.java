@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "ST_CUSTOMER")
 @Entity(name = "st_Customer")
 @NamePattern("%s|name")
-@DiscriminatorColumn(name = "U", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Customer extends StandardEntity {
     private static final long serialVersionUID = 7743656841963280426L;

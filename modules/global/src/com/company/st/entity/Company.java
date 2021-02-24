@@ -1,16 +1,17 @@
 package com.company.st.entity;
 
 import com.haulmont.chile.core.annotations.NamePattern;
-import com.haulmont.cuba.core.entity.StandardEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @PrimaryKeyJoinColumn(name = "ID", referencedColumnName = "ID")
-@DiscriminatorValue("COMPANY")
 @Table(name = "ST_COMPANY")
 @Entity(name = "st_Company")
 @NamePattern("%s|registrationId")
-public class Company extends StandardEntity {
+public class Company extends Customer {
     private static final long serialVersionUID = 8159731181693766843L;
 
     @Column(name = "REGISTRATION_ID")

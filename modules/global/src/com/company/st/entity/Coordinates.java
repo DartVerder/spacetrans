@@ -9,22 +9,20 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 
 @MetaClass(name = "st_Coordinates")
 @Embeddable
 public class Coordinates extends EmbeddableEntity {
     private static final long serialVersionUID = -2327920420596891354L;
+
     @NumberFormat(pattern = "###.000000", decimalSeparator = ",")
-    @NotNull
     @Column(name = "LATITUDE", nullable = false)
     @DecimalMin("-90")
     @DecimalMax("90")
     @Digits(integer = 3, fraction = 6)
     private Double latitude;
 
-    @NumberFormat(pattern = "###,000000°", decimalSeparator = ",")
-    @NotNull
+    @NumberFormat(pattern = "###.000000", decimalSeparator = ",")
     @Column(name = "LONGTITUDE", nullable = false)
     @DecimalMin("-180")
     @DecimalMax("180")

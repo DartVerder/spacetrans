@@ -58,3 +58,9 @@ create index IDX_ST_WAYBILL_ITEM_ON_WAYBILL on ST_WAYBILL_ITEM (WAYBILL_ID)^
 alter table ST_CARRIER_SPACEPORT_LINK add constraint FK_CARSPA_ON_SPACEPORT foreign key (SPACEPORT_ID) references ST_SPACEPORT(ID)^
 alter table ST_CARRIER_SPACEPORT_LINK add constraint FK_CARSPA_ON_CARRIER foreign key (CARRIER_ID) references ST_CARRIER(ID)^
 -- end ST_CARRIER_SPACEPORT_LINK
+-- begin ST_COMPANY
+alter table ST_COMPANY add constraint FK_ST_COMPANY_ON_ID foreign key (ID) references ST_CUSTOMER(ID) on delete CASCADE^
+-- end ST_COMPANY
+-- begin ST_INDIVIDUAL
+alter table ST_INDIVIDUAL add constraint FK_ST_INDIVIDUAL_ON_ID foreign key (ID) references ST_CUSTOMER(ID) on delete CASCADE^
+-- end ST_INDIVIDUAL

@@ -8,4 +8,8 @@ import com.company.st.entity.Planet;
 @EditedEntityContainer("planetDc")
 @LoadDataBeforeShow
 public class PlanetEdit extends StandardEditor<Planet> {
+    @Subscribe
+    public void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
+
+    }
 }

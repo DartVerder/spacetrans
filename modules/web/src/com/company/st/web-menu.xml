@@ -4,7 +4,7 @@
         <item screen="st_AtmosphericGas.browse" caption="mainMsg://menu_config.st_AtmosphericGas.browse"/>
         <item screen="st_Gas.browse" caption="mainMsg://menu_config.st_Gas.browse"/>
         <item screen="st_Atmosphere.browse" caption="mainMsg://menu_config.st_Atmosphere.browse"/>
-        <item screen="st_Coordinates.browse" caption="mainMsg://menu_config.st_Coordinates.browse"/>
         <item screen="st_Planet.browse" caption="mainMsg://menu_config.st_Planet.browse"/>
+        <item screen="st_Spaceport.browse" caption="mainMsg://menu_config.st_Spaceport.browse"/>
     </menu>
 </menu-config>

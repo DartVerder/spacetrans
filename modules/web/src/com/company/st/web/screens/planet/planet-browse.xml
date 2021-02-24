@@ -17,16 +17,17 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="planetsTable"
-            spacing="true">
+    <layout>
+        <split id="split" height="100%" orientation="horizontal" reversePosition="true" width="100%">
+        <vbox id="lookupBox" expand="planetsTable" height="100%" margin="false,true,false,false" spacing="true">
         <filter id="filter"
                 applyTo="planetsTable"
                 dataLoader="planetsDl">
             <properties include=".*"/>
         </filter>
         <groupTable id="planetsTable"
-                    width="100%"
-                    dataContainer="planetsDc">
+                        width="100%"
+                        dataContainer="planetsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -50,6 +51,11 @@
 
             </buttonsPanel>
         </groupTable>
+        </vbox>
+            <vbox id="box"  height="100%" margin="false,true,false,false" spacing="true">
+                <image id="image" dataContainer="planetsDc" property="picture"/>
+            </vbox>
+        </split>
 
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>

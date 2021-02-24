@@ -29,7 +29,12 @@ public class Spaceport extends StandardEntity {
     private Boolean isDefault;
 
     @Embedded
-    private Coordinates coordinates;
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "LATITUDE")),
+            @AttributeOverride(name = "longtitude", column = @Column(name = "LONGTITUDE"))
+    })
+    protected Coordinates coordinates;
+
 
     @JoinTable(name = "ST_CARRIER_SPACEPORT_LINK",
             joinColumns = @JoinColumn(name = "SPACEPORT_ID"),
@@ -76,4 +81,10 @@ public class Spaceport extends StandardEntity {
     public void setCarriers(List<Carrier> carriers) {
         this.carriers = carriers;
     }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+
 }
