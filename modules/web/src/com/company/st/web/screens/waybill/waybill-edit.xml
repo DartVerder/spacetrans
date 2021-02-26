@@ -7,10 +7,10 @@
         <instance id="waybillDc"
                   class="com.company.st.entity.Waybill">
             <view extends="waybill-view">
-                <property name="items" view="_minimal"/>
+                <property name="items" view="waybillItem-view"/>
             </view>
             <loader/>
-            <collection id="itemsDc" property="items"/>
+            <collection id="itemsDc" property="items"   />
         </instance>
         <collection id="companiesDc" class="com.company.st.entity.Company" view="company-view">
             <loader id="companiesDl">
@@ -127,6 +127,9 @@
                 </actions>
                 <columns>
                     <column id="name"/>
+                    <column id="weight"/>
+                    <column id="charge"/>
+
                 </columns>
                 <buttonsPanel>
                     <button action="itemsTable.create"/>

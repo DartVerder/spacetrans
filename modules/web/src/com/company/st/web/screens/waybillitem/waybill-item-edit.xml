@@ -9,6 +9,9 @@
                   view="waybillItem-view">
             <loader/>
         </instance>
+        <instance id="waybillDc" class="com.company.st.entity.Waybill" view="waybill-view">
+            <loader id="waybillDl"/>
+        </instance>
     </data>
     <dialogMode height="600"
                 width="800"/>

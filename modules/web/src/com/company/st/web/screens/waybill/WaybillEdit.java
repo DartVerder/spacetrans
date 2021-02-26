@@ -6,11 +6,13 @@ import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
+import com.haulmont.cuba.gui.model.CollectionPropertyContainer;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.web.App;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.util.*;
 
 @UiController("st_Waybill.edit")
@@ -53,6 +55,14 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     private PickerField<Spaceport> departurePortField;
     @Inject
     private CollectionContainer<Carrier> carriersDc;
+    @Inject
+    private TextField<BigDecimal> totalChargeField;
+    @Inject
+    private TextField<Double> totalWeightField;
+    @Inject
+    private CollectionPropertyContainer<WaybillItem> itemsDc;
+    @Inject
+    private InstanceContainer<Waybill> waybillDc;
 
 
     @Subscribe("shipperRadio")
@@ -234,10 +244,12 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         }
 
     }
-
-    @Install(to = "itemsTable.edit", subject = "afterCommitHandler")
-    private void itemsTableEditAfterCommitHandler(WaybillItem waybillItem) {
-       // waybillItem.get(WaybillService.class).charge(waybillItem);
-
+    @Subscribe(id = "itemsDc", target = Target.DATA_CONTAINER)
+    public void onItemsDcCollectionChange(CollectionContainer.CollectionChangeEvent<WaybillItem> event) {
+        totalChargeField.setValue(AppBeans.get(WaybillService.class).totalCharge(waybillDc.getItem()));
+        totalWeightField.setValue(AppBeans.get(WaybillService.class).totalWeight(waybillDc.getItem()));
     }
+
+
+
 }

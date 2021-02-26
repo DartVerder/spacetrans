@@ -13,7 +13,10 @@ public class WaybillServiceBean implements WaybillService {
     @Override
      public BigDecimal charge(WaybillItem waybillItem)
      {
-         if(waybillItem!=null&&waybillItem.getDim()!=null&&waybillItem.getWeight()!=null)
+         if(waybillItem!=null&&waybillItem.getDim()!=null&&waybillItem.getDim().getHeight()!=null
+                 &&waybillItem.getDim().getLength()!=null&&waybillItem.getDim().getWidth()!=null
+                 &&waybillItem.getWeight()!=null)
+
          {
              Double height = waybillItem.getDim().getHeight();
              Double length = waybillItem.getDim().getLength();
@@ -30,11 +33,11 @@ public class WaybillServiceBean implements WaybillService {
     public BigDecimal totalCharge(Waybill waybill)
     {
         BigDecimal total = new BigDecimal(0);
-        if(waybill!=null)
+        if(waybill!=null&&waybill.getItems()!=null)
         {
             for(WaybillItem w: waybill.getItems())
             {
-                total.add(w.getCharge());
+                total = total.add(w.getCharge());
             }
         }
         return total;
@@ -44,7 +47,7 @@ public class WaybillServiceBean implements WaybillService {
     public Double totalWeight(Waybill waybill)
     {
         Double total = 0.0;
-        if(waybill!=null)
+        if(waybill!=null&&waybill.getItems()!=null)
         {
             for(WaybillItem w: waybill.getItems())
             {

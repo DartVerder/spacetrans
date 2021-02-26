@@ -4,19 +4,21 @@ import com.company.st.service.WaybillService;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.EmbeddedParameters;
+import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 import com.haulmont.cuba.core.global.AppBeans;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+@PublishEntityChangedEvents
 @Table(name = "ST_WAYBILL_ITEM")
 @Entity(name = "st_WaybillItem")
 @NamePattern("%s|name")
 public class WaybillItem extends StandardEntity {
     private static final long serialVersionUID = 5178883424732340774L;
 
-    @Column(name = "NUMBER_")
+    @Column(name = "NUMBER_", unique = true)
     private Integer number;
 
     @NotNull
@@ -82,7 +84,4 @@ public class WaybillItem extends StandardEntity {
         return number;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 }
