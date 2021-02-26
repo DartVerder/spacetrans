@@ -50,8 +50,9 @@
             </buttonsPanel>
         </groupTable>
         </vbox>
-            <vbox id="box"  height="100%" margin="false,true,false,false" spacing="true">
-                <image id="image" dataContainer="planetsDc" property="picture"/>
+            <vbox id="box" height="100%" margin="false,true,false,false" spacing="true" width="100%">
+                <image id="planetImage" width="400" align="MIDDLE_CENTER" dataContainer="planetsDc" property="picture"
+                       scaleMode="FILL"/>
             </vbox>
         </split>
 

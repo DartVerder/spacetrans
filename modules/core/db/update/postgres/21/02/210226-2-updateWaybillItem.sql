@@ -1,0 +1,10 @@
+update ST_WAYBILL_ITEM set DIM_LENGTH = 0 where DIM_LENGTH is null ;
+alter table ST_WAYBILL_ITEM alter column DIM_LENGTH set not null ;
+update ST_WAYBILL_ITEM set DIM_WIDTH = 0 where DIM_WIDTH is null ;
+alter table ST_WAYBILL_ITEM alter column DIM_WIDTH set not null ;
+update ST_WAYBILL_ITEM set DIM_HEIGHT = 0 where DIM_HEIGHT is null ;
+alter table ST_WAYBILL_ITEM alter column DIM_HEIGHT set not null ;
+-- update ST_WAYBILL_ITEM set NUMBER_ = <default_value> where NUMBER_ is null ;
+alter table ST_WAYBILL_ITEM alter column NUMBER_ set not null ;
+update ST_WAYBILL_ITEM set WEIGHT = 0 where WEIGHT is null ;
+alter table ST_WAYBILL_ITEM alter column WEIGHT set not null ;

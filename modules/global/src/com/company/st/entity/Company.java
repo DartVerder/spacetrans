@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @PrimaryKeyJoinColumn(name = "ID", referencedColumnName = "ID")
 @Table(name = "ST_COMPANY")
@@ -14,10 +15,12 @@ import javax.persistence.Table;
 public class Company extends Customer {
     private static final long serialVersionUID = 8159731181693766843L;
 
-    @Column(name = "REGISTRATION_ID")
+    @Column(name = "REGISTRATION_ID", nullable = false)
+    @NotNull
     private String registrationId;
 
-    @Column(name = "COMPANY_TYPE")
+    @Column(name = "COMPANY_TYPE", nullable = false)
+    @NotNull
     private String companyType;
 
     public String getCompanyType() {

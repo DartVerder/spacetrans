@@ -19,7 +19,8 @@ public class Customer extends StandardEntity {
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "GRADE")
+    @Column(name = "GRADE", nullable = false)
+    @NotNull
     private Integer grade;
 
     @NotNull

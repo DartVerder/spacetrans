@@ -51,6 +51,7 @@ create index IDX_ST_WAYBILL_ON_CARRIER on ST_WAYBILL (CARRIER_ID)^
 -- end ST_WAYBILL
 -- begin ST_WAYBILL_ITEM
 alter table ST_WAYBILL_ITEM add constraint FK_ST_WAYBILL_ITEM_ON_WAYBILL foreign key (WAYBILL_ID) references ST_WAYBILL(ID)^
+create unique index IDX_ST_WAYBILL_ITEM_UK_NUMBER_ on ST_WAYBILL_ITEM (NUMBER_) where DELETE_TS is null ^
 create unique index IDX_ST_WAYBILL_ITEM_UK_NAME on ST_WAYBILL_ITEM (NAME) where DELETE_TS is null ^
 create index IDX_ST_WAYBILL_ITEM_ON_WAYBILL on ST_WAYBILL_ITEM (WAYBILL_ID)^
 -- end ST_WAYBILL_ITEM
@@ -64,6 +65,3 @@ alter table ST_COMPANY add constraint FK_ST_COMPANY_ON_ID foreign key (ID) refer
 -- begin ST_INDIVIDUAL
 alter table ST_INDIVIDUAL add constraint FK_ST_INDIVIDUAL_ON_ID foreign key (ID) references ST_CUSTOMER(ID) on delete CASCADE^
 -- end ST_INDIVIDUAL
--- begin ST_DISCOUNT
-create unique index IDX_ST_DISCOUNT_UK_GRADE on ST_DISCOUNT (GRADE) where DELETE_TS is null ^
--- end ST_DISCOUNT

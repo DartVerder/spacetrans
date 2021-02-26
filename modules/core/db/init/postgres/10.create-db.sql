@@ -122,7 +122,7 @@ create table ST_CUSTOMER (
     DTYPE varchar(31),
     --
     NAME varchar(255) not null,
-    GRADE integer,
+    GRADE integer not null,
     EMAIL varchar(255) not null,
     --
     primary key (ID)
@@ -140,7 +140,7 @@ create table ST_DISCOUNT (
     DELETED_BY varchar(50),
     --
     VALUE_ decimal(19, 2) not null,
-    GRADE integer,
+    GRADE integer not null,
     --
     primary key (ID)
 )^
@@ -178,12 +178,12 @@ create table ST_WAYBILL (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    REFERENCE varchar(255),
+    REFERENCE varchar(255) not null,
     CREATOR_ID uuid,
-    SHIPPER_ID uuid,
-    CONSIGNEE_ID uuid,
-    DEPARTURE_PORT_ID uuid,
-    DESTINATION_PORT_ID uuid,
+    SHIPPER_ID uuid not null,
+    CONSIGNEE_ID uuid not null,
+    DEPARTURE_PORT_ID uuid not null,
+    DESTINATION_PORT_ID uuid not null,
     CARRIER_ID uuid,
     TOTAL_CHARGE decimal(19, 2),
     --
@@ -201,13 +201,13 @@ create table ST_WAYBILL_ITEM (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    DIM_LENGTH double precision,
-    DIM_WIDTH double precision,
-    DIM_HEIGHT double precision,
+    DIM_LENGTH double precision not null,
+    DIM_WIDTH double precision not null,
+    DIM_HEIGHT double precision not null,
     --
-    NUMBER_ integer,
+    NUMBER_ integer not null,
     NAME varchar(255) not null,
-    WEIGHT double precision,
+    WEIGHT double precision not null,
     CHARGE decimal(19, 2),
     WAYBILL_ID uuid,
     --
@@ -218,8 +218,8 @@ create table ST_WAYBILL_ITEM (
 create table ST_INDIVIDUAL (
     ID uuid,
     --
-    FIRST_NAME varchar(255),
-    LAST_NAME varchar(255),
+    FIRST_NAME varchar(255) not null,
+    LAST_NAME varchar(255) not null,
     --
     primary key (ID)
 )^
@@ -228,8 +228,8 @@ create table ST_INDIVIDUAL (
 create table ST_COMPANY (
     ID uuid,
     --
-    REGISTRATION_ID varchar(255),
-    COMPANY_TYPE varchar(255),
+    REGISTRATION_ID varchar(255) not null,
+    COMPANY_TYPE varchar(255) not null,
     --
     primary key (ID)
 )^

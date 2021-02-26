@@ -25,7 +25,9 @@
                         <action id="clear" type="picker_clear"/>
                     </actions>
                 </pickerField>
-                <upload id="PictureUpload" dataContainer="planetDc" property="picture"/>
+                <upload id="PictureUpload" dataContainer="planetDc" property="picture"
+                        clearButtonCaption="msg://PictureUpload.clearButtonCaption" showClearButton="true"
+                        showFileName="true" fileStoragePutMode="IMMEDIATE"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

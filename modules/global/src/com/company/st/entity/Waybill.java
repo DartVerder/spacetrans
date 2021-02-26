@@ -11,6 +11,7 @@ import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.security.entity.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,27 +21,32 @@ import java.util.List;
 public class Waybill extends StandardEntity {
     private static final long serialVersionUID = -5842090535415841578L;
 
-    @Column(name = "REFERENCE")
+    @Column(name = "REFERENCE", nullable = false)
+    @NotNull
     private String reference;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREATOR_ID")
     private User creator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "SHIPPER_ID")
+    @NotNull
     private Customer shipper;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CONSIGNEE_ID")
+    @NotNull
     private Customer consignee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "DEPARTURE_PORT_ID")
+    @NotNull
     private Spaceport departurePort;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "DESTINATION_PORT_ID")
+    @NotNull
     private Spaceport destinationPort;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -62,10 +68,6 @@ public class Waybill extends StandardEntity {
 
     public List<WaybillItem> getItems() {
         return items;
-    }
-
-    public void setItems(List<WaybillItem> items) {
-        this.items = items;
     }
 
     public Carrier getCarrier() {

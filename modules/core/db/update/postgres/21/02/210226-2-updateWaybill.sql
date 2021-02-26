@@ -1,0 +1,10 @@
+update ST_WAYBILL set REFERENCE = '' where REFERENCE is null ;
+alter table ST_WAYBILL alter column REFERENCE set not null ;
+-- update ST_WAYBILL set SHIPPER_ID = <default_value> where SHIPPER_ID is null ;
+alter table ST_WAYBILL alter column SHIPPER_ID set not null ;
+-- update ST_WAYBILL set CONSIGNEE_ID = <default_value> where CONSIGNEE_ID is null ;
+alter table ST_WAYBILL alter column CONSIGNEE_ID set not null ;
+-- update ST_WAYBILL set DEPARTURE_PORT_ID = <default_value> where DEPARTURE_PORT_ID is null ;
+alter table ST_WAYBILL alter column DEPARTURE_PORT_ID set not null ;
+-- update ST_WAYBILL set DESTINATION_PORT_ID = <default_value> where DESTINATION_PORT_ID is null ;
+alter table ST_WAYBILL alter column DESTINATION_PORT_ID set not null ;

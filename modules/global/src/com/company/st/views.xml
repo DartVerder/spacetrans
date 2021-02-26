@@ -15,6 +15,7 @@
             <property name="width"/>
             <property name="height"/>
         </property>
+        <property name="waybill" view="_minimal"/>
     </view>
     <view entity="st_Waybill" name="waybill-view" extends="_local">
         <property name="creator" view="_minimal"/>

@@ -30,4 +30,5 @@ public enum CustomerGrade implements EnumClass<Integer> {
         }
         return null;
     }
+
 }

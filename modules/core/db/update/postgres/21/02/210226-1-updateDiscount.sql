@@ -1,0 +1,1 @@
+drop index IDX_ST_DISCOUNT_UK_GRADE ;

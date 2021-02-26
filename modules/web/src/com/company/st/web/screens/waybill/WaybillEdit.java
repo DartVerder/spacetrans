@@ -3,6 +3,8 @@ package com.company.st.web.screens.waybill;
 import com.company.st.entity.*;
 import com.company.st.service.WaybillService;
 import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -23,8 +25,6 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     @Inject
     private RadioButtonGroup shipperRadio;
-    @Inject
-    private CollectionContainer<Waybill> waybillsDc;
     @Inject
     private CollectionContainer<Company> companiesDc;
     @Inject
@@ -63,14 +63,22 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     private CollectionPropertyContainer<WaybillItem> itemsDc;
     @Inject
     private InstanceContainer<Waybill> waybillDc;
+    @Inject
+    private PickerField<Customer> consigneeField;
+    @Inject
+    private PickerField consigneeField1;
+    @Inject
+    private PickerField consigneeField0;
+    @Inject
+    private Notifications notifications;
 
 
     @Subscribe("shipperRadio")
     public void onShipperRadioValueChange(HasValue.ValueChangeEvent event) {
         List<Customer> customers = customersDc.getItems();
         List<Customer> res = new ArrayList<>();
-        shipperField.setEditable(true);
-        Object a = shipperRadio.getValue();
+
+        shipperField.setVisible(true);
         if((int)shipperRadio.getValue()==0)
         {
             List<Company> companies = companiesDc.getItems();
@@ -79,27 +87,43 @@ public class WaybillEdit extends StandardEditor<Waybill> {
                 for(Customer e:customers)
                 {
 
-                    if(c.getId()==e.getId())
+                    if(c.getId().equals(e.getId()))
                     {
                         res.add(e); }
                 }
             }
 
         }
-        if((int)shipperRadio.getValue()==1)
+        else if((int)shipperRadio.getValue()==1)
         {
             List<Individual> individual = individualsDc.getItems();
             for(Individual i: individual)
             {
                 for(Customer e:customers)
                 {
-                    if(i.getId()==e.getId())
+                    if(i.getId().equals(e.getId()))
                     {res.add(e); }
                 }
             }
 
         }
         shipperField.setOptionsList(res);
+    }
+
+    @Subscribe("consigneeRadio")
+    public void onConsigneeRadioValueChange(HasValue.ValueChangeEvent event) {
+        if((int)consigneeRadio.getValue()==0)
+        {
+            consigneeField0.setVisible(true);
+            consigneeField1.setVisible(false);
+            setConsignee(consigneeField0,consigneeField,shipperField);
+        }
+        else if ((int)consigneeRadio.getValue()==1)
+        {
+            consigneeField1.setVisible(true);
+            consigneeField0.setVisible(false);
+            setConsignee(consigneeField1,consigneeField,shipperField);
+        }
     }
 
     @Subscribe
@@ -160,26 +184,24 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     private void defaultPort(AstronimicBody planet, PickerField field)
     {
-
-        List <Spaceport> spaceports = spaceportsDc.getItems();
-        field.setVisible(true);
-        field.setValue(null);
-        for(Spaceport spaceport: spaceports)
-        {
-            if(spaceport.getPlanet()!=null) {
-                if (spaceport.getPlanet().getName().equals(planet.getName())) {
-                    if (spaceport.getIsDefault()!=null&&spaceport.getIsDefault()) {
-                        field.setValue(spaceport);
-                        break;
+        if(field.getValue()==null) {
+            List<Spaceport> spaceports = spaceportsDc.getItems();
+            field.setVisible(true);
+            field.setValue(null);
+            for (Spaceport spaceport : spaceports) {
+                if (spaceport.getPlanet() != null) {
+                    if (spaceport.getPlanet().getName().equals(planet.getName())) {
+                        if (spaceport.getIsDefault() != null && spaceport.getIsDefault()) {
+                            field.setValue(spaceport);
+                            break;
+                        }
                     }
-                }
-            }
-            else if(spaceport.getMoon()!=null)
-            {
-                if(spaceport.getMoon().getName().equals(planet.getName())) {
-                    if (spaceport.getIsDefault()!=null&&spaceport.getIsDefault()) {
-                        field.setValue(spaceport);
-                        break;
+                } else if (spaceport.getMoon() != null) {
+                    if (spaceport.getMoon().getName().equals(planet.getName())) {
+                        if (spaceport.getIsDefault() != null && spaceport.getIsDefault()) {
+                            field.setValue(spaceport);
+                            break;
+                        }
                     }
                 }
             }
@@ -249,6 +271,47 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         totalChargeField.setValue(AppBeans.get(WaybillService.class).totalCharge(waybillDc.getItem()));
         totalWeightField.setValue(AppBeans.get(WaybillService.class).totalWeight(waybillDc.getItem()));
     }
+
+    private void setConsignee(PickerField tmp, PickerField main, LookupField shipper)
+    {
+        if(shipper!=null&&tmp!=null&&shipper.getValue()!=null&&tmp.getValue()!=null&&shipper.getValue().equals(tmp.getValue()))
+        {
+            tmp.setValue(null);
+            throw new RuntimeException("The shipper is equal to the consignee! Please choose different values for sender and consignee");
+        }
+        else {
+            main.setValue(tmp.getValue());
+        }
+    }
+
+
+    @Subscribe("consigneeField0")
+    public void onConsigneeField0ValueChange(HasValue.ValueChangeEvent event) {
+        setConsignee(consigneeField0,consigneeField,shipperField);
+    }
+
+    @Subscribe("consigneeField1")
+    public void onConsigneeField1ValueChange(HasValue.ValueChangeEvent event) {
+        setConsignee(consigneeField1,consigneeField,shipperField);
+    }
+
+    @Subscribe("shipperField")
+    public void onShipperFieldValueChange(HasValue.ValueChangeEvent<Customer> event) {
+        if(consigneeField.getValue()!=null&&consigneeField.getValue().equals(shipperField.getValue()))
+        {
+            shipperField.setValue(null);
+            throw new RuntimeException("The shipper is equal to the consignee! Please choose different values for sender and consignee");
+        }
+
+
+    }
+
+
+
+
+
+
+
 
 
 

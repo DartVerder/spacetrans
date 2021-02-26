@@ -1,14 +1,21 @@
 package com.company.st.service;
 
+import com.company.st.entity.CustomerGrade;
+import com.company.st.entity.Discount;
 import com.company.st.entity.Waybill;
 import com.company.st.entity.WaybillItem;
+import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.math.BigDecimal;
 
 @Service(WaybillService.NAME)
 public class WaybillServiceBean implements WaybillService {
+
+    @Inject
+    private DataManager dataManager;
 
     @Override
      public BigDecimal charge(WaybillItem waybillItem)
@@ -33,13 +40,26 @@ public class WaybillServiceBean implements WaybillService {
     public BigDecimal totalCharge(Waybill waybill)
     {
         BigDecimal total = new BigDecimal(0);
+
         if(waybill!=null&&waybill.getItems()!=null)
         {
             for(WaybillItem w: waybill.getItems())
             {
                 total = total.add(w.getCharge());
             }
+            if(waybill.getShipper()!=null&&waybill.getShipper().getGrade()!=null)
+            {
+                CustomerGrade grade  =waybill.getShipper().getGrade();
+                Double res =dataManager.loadValue("select e.value from st_Discounts e where e.grade = :grade", BigDecimal.class)
+                        .parameter("grade", grade.getId())
+                        .one().doubleValue();
+
+                BigDecimal discount = new BigDecimal(res);
+                discount=discount.subtract(BigDecimal.valueOf(100)).negate().multiply(BigDecimal.valueOf(0.01));
+                total = total.multiply(discount);
+            }
         }
+
         return total;
     }
 
@@ -47,6 +67,7 @@ public class WaybillServiceBean implements WaybillService {
     public Double totalWeight(Waybill waybill)
     {
         Double total = 0.0;
+
         if(waybill!=null&&waybill.getItems()!=null)
         {
             for(WaybillItem w: waybill.getItems())

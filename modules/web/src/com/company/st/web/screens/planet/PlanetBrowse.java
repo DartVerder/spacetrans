@@ -1,16 +1,14 @@
 package com.company.st.web.screens.planet;
 
-import com.company.st.entity.Customer;
 import com.company.st.service.CsvService;
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.core.global.CommitContext;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.FileStorageException;
-import com.haulmont.cuba.gui.components.FileUploadField;
-import com.haulmont.cuba.gui.components.LayoutClickNotifier;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.*;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.st.entity.Planet;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import org.slf4j.Logger;
 
@@ -19,9 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 @UiController("st_Planet.browse")
@@ -45,6 +42,10 @@ public class PlanetBrowse extends StandardLookup<Planet> {
     private Logger log;
     @Inject
     private DataComponents dataComponents;
+    @Inject
+    private GroupTable<Planet> planetsTable;
+    @Inject
+    private Image planetImage;
 
     private void processfile(File file)
     {
@@ -118,4 +119,6 @@ public class PlanetBrowse extends StandardLookup<Planet> {
         Collection<? extends Planet> changes = event.getChanges();
         // ...
     }
+
+
 }

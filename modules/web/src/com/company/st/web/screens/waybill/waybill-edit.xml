@@ -67,17 +67,41 @@
                         <action id="clear" type="picker_clear"/>
                     </actions>
                 </pickerField>
-                <radioButtonGroup id="shipperRadio" orientation="horizontal" required="true"/>
+                <hbox id="shipperHbox" caption="msg://hbox.caption_1">
+                    <radioButtonGroup id="shipperRadio" orientation="horizontal" required="true"/>
+                    <lookupField id="shipperField" dataContainer="waybillDc" property="shipper"
+                                 visible="false"/>
+                </hbox>
 
-                <lookupField id="shipperField" dataContainer="waybillDc" property="shipper" editable="false"/>
-                <radioButtonGroup id="consigneeRadio" orientation="horizontal"/>
+                <hbox id="consigneeHbox" caption="msg://consigneeHbox.caption">
+                    <radioButtonGroup id="consigneeRadio" orientation="horizontal"/>
+                    <pickerField id="consigneeField0"
+                                 visible="false" metaClass="st_Company" property="name">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"></action>
+                            <action id="clear" type="picker_clear"/>
 
-                <pickerField id="consigneeField" property="consignee" editable="false" dataContainer="waybillDc" >
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="consigneeField1" property="name"
+                                 visible="false" metaClass="st_Individual">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"></action>
+                            <action id="clear" type="picker_clear"/>
+
+                        </actions>
+                    </pickerField>
+                    <lookupPickerField id="consigneeField" dataContainer="waybillDc" property="consignee"
+                                       visible="false">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"></action>
+                            <action id="clear" type="picker_clear"/>
+
+                        </actions>
+                    </lookupPickerField>
+
+                </hbox>
+
                 <hbox id="departure" caption="msg://hbox.caption">
                     <lookupField id="planetMoonDep"/>
                     <pickerField id="departurePlanet" visible="false" dataContainer="spaceportsDc" property="planet">
@@ -107,6 +131,10 @@
                     </pickerField>
                 </hbox>
                 <pickerField id="destinationPortField" property="destinationPort" visible="false">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
                 </pickerField>
                 <pickerField id="carrierField" property="carrier">
                     <actions>

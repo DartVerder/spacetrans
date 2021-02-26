@@ -21,6 +21,7 @@ public class Carrier extends StandardEntity {
             joinColumns = @JoinColumn(name = "CARRIER_ID"),
             inverseJoinColumns = @JoinColumn(name = "SPACEPORT_ID"))
     @ManyToMany
+    @NotNull
     private List<Spaceport> ports;
 
     public List<Spaceport> getPorts() {

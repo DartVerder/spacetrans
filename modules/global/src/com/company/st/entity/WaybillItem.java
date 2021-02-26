@@ -18,14 +18,16 @@ import java.math.BigDecimal;
 public class WaybillItem extends StandardEntity {
     private static final long serialVersionUID = 5178883424732340774L;
 
-    @Column(name = "NUMBER_", unique = true)
+    @Column(name = "NUMBER_", nullable = false, unique = true)
+    @NotNull
     private Integer number;
 
     @NotNull
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "WEIGHT")
+    @Column(name = "WEIGHT", nullable = false)
+    @NotNull
     private Double weight;
 
     @Embedded
@@ -35,7 +37,7 @@ public class WaybillItem extends StandardEntity {
             @AttributeOverride(name = "width", column = @Column(name = "DIM_WIDTH")),
             @AttributeOverride(name = "height", column = @Column(name = "DIM_HEIGHT"))
     })
-    private Dimensions dim;
+    private @NotNull Dimensions dim;
 
     @Column(name = "CHARGE")
     private BigDecimal charge;

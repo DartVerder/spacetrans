@@ -26,26 +26,22 @@ public class WaybillItemEdit extends StandardEditor<WaybillItem> {
 
     @Subscribe("dimLengthField")
     public void onDimLengthFieldValueChange(HasValue.ValueChangeEvent<Double> event) {
-        WaybillItem waybillItem= waybillItemDc.getItem();
-        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItem));
+        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItemDc.getItem()));
     }
 
     @Subscribe("dimWidthField")
     public void onDimWidthFieldValueChange(HasValue.ValueChangeEvent<Double> event) {
-        WaybillItem waybillItem= waybillItemDc.getItem();
-        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItem));
+        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItemDc.getItem()));
     }
 
     @Subscribe("dimHeightField")
     public void onDimHeightFieldValueChange(HasValue.ValueChangeEvent<Double> event) {
-        WaybillItem waybillItem= waybillItemDc.getItem();
-        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItem));
+        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItemDc.getItem()));
     }
 
     @Subscribe("weightField")
     public void onWeightFieldValueChange(HasValue.ValueChangeEvent<Double> event) {
-        WaybillItem waybillItem= waybillItemDc.getItem();
-        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItem));
+        chargeField.setValue(AppBeans.get(WaybillService.class).charge(waybillItemDc.getItem()));
     }
 
 
