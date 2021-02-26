@@ -22,20 +22,15 @@ public class SpaceportEdit extends StandardEditor<Spaceport> {
     private InstanceContainer<Spaceport> spaceportDc;
     @Inject
     private CollectionContainer<Spaceport> spaceportsDc;
-    @Inject
-    private Button commitAndCloseBtn;
-    @Inject
-    private AttributeAccessUpdater attributeAccessUpdater;
-    @Inject
-    private DataComponents dataComponents;
+
 
     @Subscribe
     public void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
         Spaceport spaceport = spaceportDc.getItem();
         //check that used only Planet or only Moon
 
-        if (spaceport.getMoon() != null && spaceport.getPlanet() != null) {
-            throw new RuntimeException("Please select only one: Moon OR Planet");
+        if ((spaceport.getMoon() != null && spaceport.getPlanet() != null)||(spaceport.getMoon() == null && spaceport.getPlanet() == null)) {
+            throw new RuntimeException("Please select one: Moon OR Planet");
         }
 
         //check that isDefault=true is the only one
@@ -43,9 +38,12 @@ public class SpaceportEdit extends StandardEditor<Spaceport> {
             if (spaceport.getIsDefault() != null&& spaceport.getIsDefault()) {
                 List<Spaceport> allSpaceports = spaceportsDc.getMutableItems();
                 for (Spaceport tmp : allSpaceports) {
-                    if (tmp.getIsDefault()!=null&& !tmp.getName().equals(spaceport.getName()) && tmp.getIsDefault()){
-                        tmp.setIsDefault(null);
-                        break;
+                    if(tmp.getMoon()==spaceport.getMoon()&&tmp.getPlanet()==spaceport.getPlanet())
+                    {
+                        if (tmp.getIsDefault()!=null&& !tmp.getName().equals(spaceport.getName()) && tmp.getIsDefault()){
+                            tmp.setIsDefault(null);
+                            break;
+                        }
                     }
                 }
             }

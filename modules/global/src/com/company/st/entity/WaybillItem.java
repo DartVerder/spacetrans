@@ -1,8 +1,10 @@
 package com.company.st.entity;
 
+import com.company.st.service.WaybillService;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.EmbeddedParameters;
+import com.haulmont.cuba.core.global.AppBeans;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -57,11 +59,7 @@ public class WaybillItem extends StandardEntity {
     }
 
     public BigDecimal getCharge() {
-        return charge;
-    }
-
-    public void setCharge(BigDecimal charge) {
-        this.charge = charge;
+        return AppBeans.get(WaybillService.class).charge(this);
     }
 
     public Double getWeight() {

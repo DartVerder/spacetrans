@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        caption="msg://individualEdit.caption"
+        caption="msg://discountEdit.caption"
         focusComponent="form"
-        messagesPack="com.company.st.web.screens.individual">
+        messagesPack="com.company.st.web.screens.discount">
     <data>
-        <instance id="individualDc"
-                  class="com.company.st.entity.Individual">
-            <view extends="individual-view"/>
+        <instance id="discountDc"
+                  class="com.company.st.entity.Discount">
+            <view extends="_local"/>
             <loader/>
         </instance>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="individualDc">
+        <form id="form" dataContainer="discountDc">
             <column width="350px">
-                <textField id="nameField" property="name"/>
+                <textField id="valueField" property="value"/>
                 <lookupField id="gradeField" property="grade"/>
-                <textField id="emailField" property="email"/>
-                <textField id="firstNameField" property="firstName"/>
-                <textField id="lastNameField" property="lastName"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

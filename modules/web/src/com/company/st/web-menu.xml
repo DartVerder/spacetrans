@@ -13,5 +13,6 @@
         <item screen="st_Company.browse" caption="mainMsg://menu_config.st_Company.browse"/>
         <item screen="st_Customer.browse" caption="mainMsg://menu_config.st_Customer.browse"/>
         <item screen="st_Individual.browse" caption="mainMsg://menu_config.st_Individual.browse"/>
+        <item screen="st_Discount.browse" caption="mainMsg://menu_config.st_Discount.browse"/>
     </menu>
 </menu-config>

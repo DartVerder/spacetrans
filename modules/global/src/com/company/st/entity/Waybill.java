@@ -1,10 +1,12 @@
 package com.company.st.entity;
 
+import com.company.st.service.WaybillService;
 import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.security.entity.User;
 
@@ -55,11 +57,7 @@ public class Waybill extends StandardEntity {
     private BigDecimal totalCharge;
 
     public BigDecimal getTotalCharge() {
-        return totalCharge;
-    }
-
-    public void setTotalCharge(BigDecimal totalCharge) {
-        this.totalCharge = totalCharge;
+        return AppBeans.get(WaybillService.class).totalCharge(this);
     }
 
     public List<WaybillItem> getItems() {
@@ -125,12 +123,9 @@ public class Waybill extends StandardEntity {
     public void setReference(String reference) {
         this.reference = reference;
     }
-    @MetaProperty(related = "items")
+
+    @MetaProperty
     public Double getTotalWeight() {
-        Double res = 0.0;
-        for (WaybillItem e:items) {
-            res+=e.getWeight();
-        }
-        return res;
+        return AppBeans.get(WaybillService.class).totalWeight(this);
     }
 }

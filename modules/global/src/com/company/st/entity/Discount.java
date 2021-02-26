@@ -21,7 +21,7 @@ public class Discount extends StandardEntity {
     @Column(name = "VALUE_", nullable = false)
     private BigDecimal value;
 
-    @Column(name = "GRADE")
+    @Column(name = "GRADE", unique = true)
     private Integer grade;
 
     public CustomerGrade getGrade() {

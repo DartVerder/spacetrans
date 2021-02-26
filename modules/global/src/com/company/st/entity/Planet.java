@@ -1,6 +1,7 @@
 package com.company.st.entity;
 
 import com.haulmont.chile.core.annotations.Composition;
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Table(name = "ST_PLANET")
 @Entity(name = "st_Planet")
+@NamePattern("%s|name")
 public class Planet extends AstronimicBody {
     private static final long serialVersionUID = -2778544479570002416L;
 
@@ -51,10 +53,7 @@ public class Planet extends AstronimicBody {
     }
 
     public void setRings(String rings) {
-        if(rings.contains("y"))
-            this.rings = true;
-        else
-            this.rings=false;
+        this.rings = rings.contains("y");
     }
 
     public Double getRotationPeriod() {

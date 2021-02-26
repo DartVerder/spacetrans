@@ -1,50 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://individualBrowse.caption"
-        focusComponent="individualsTable"
-        messagesPack="com.company.st.web.screens.individual">
+        caption="msg://discountBrowse.caption"
+        focusComponent="discountsTable"
+        messagesPack="com.company.st.web.screens.discount">
     <data readOnly="true">
-        <collection id="individualsDc"
-                    class="com.company.st.entity.Individual">
-            <view extends="individual-view"/>
-            <loader id="individualsDl">
+        <collection id="discountsDc"
+                    class="com.company.st.entity.Discount">
+            <view extends="_local"/>
+            <loader id="discountsDl">
                 <query>
-                    <![CDATA[select e from st_Individual e]]>
+                    <![CDATA[select e from st_Discount e]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="individualsTable"
+    <layout expand="discountsTable"
             spacing="true">
         <filter id="filter"
-                applyTo="individualsTable"
-                dataLoader="individualsDl">
+                applyTo="discountsTable"
+                dataLoader="discountsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="individualsTable"
+        <groupTable id="discountsTable"
                     width="100%"
-                    dataContainer="individualsDc">
+                    dataContainer="discountsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="name"/>
+                <column id="value"/>
                 <column id="grade"/>
-                <column id="email"/>
-                <column id="firstName"/>
-                <column id="lastName"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="individualsTable.create"/>
-                <button id="editBtn" action="individualsTable.edit"/>
-                <button id="removeBtn" action="individualsTable.remove"/>
+                <button id="createBtn" action="discountsTable.create"/>
+                <button id="editBtn" action="discountsTable.edit"/>
+                <button id="removeBtn" action="discountsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

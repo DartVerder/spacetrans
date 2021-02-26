@@ -86,8 +86,6 @@ public class PlanetBrowse extends StandardLookup<Planet> {
 
         dataContext.commit();
         getScreenData().loadAll();
-
-        //need to commit changes of planetsDc
     }
 
 

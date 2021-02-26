@@ -1,5 +1,6 @@
 package com.company.st.web.screens.waybillitem;
 
+import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.st.entity.WaybillItem;
 
@@ -8,4 +9,5 @@ import com.company.st.entity.WaybillItem;
 @EditedEntityContainer("waybillItemDc")
 @LoadDataBeforeShow
 public class WaybillItemEdit extends StandardEditor<WaybillItem> {
+
 }

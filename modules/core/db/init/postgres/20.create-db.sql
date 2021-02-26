@@ -64,3 +64,6 @@ alter table ST_COMPANY add constraint FK_ST_COMPANY_ON_ID foreign key (ID) refer
 -- begin ST_INDIVIDUAL
 alter table ST_INDIVIDUAL add constraint FK_ST_INDIVIDUAL_ON_ID foreign key (ID) references ST_CUSTOMER(ID) on delete CASCADE^
 -- end ST_INDIVIDUAL
+-- begin ST_DISCOUNT
+create unique index IDX_ST_DISCOUNT_UK_GRADE on ST_DISCOUNT (GRADE) where DELETE_TS is null ^
+-- end ST_DISCOUNT

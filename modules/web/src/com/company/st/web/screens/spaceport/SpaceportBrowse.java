@@ -15,10 +15,13 @@ public class SpaceportBrowse extends StandardLookup<Spaceport> {
     @Inject
     private CollectionLoader<Spaceport> spaceportsDl;
 
+
+
+
     @Subscribe
-    public void onBeforeShow(BeforeShowEvent event) {
-
-
+    public void onInit(InitEvent event) {
+        getScreenData().loadAll();
     }
+
 
 }

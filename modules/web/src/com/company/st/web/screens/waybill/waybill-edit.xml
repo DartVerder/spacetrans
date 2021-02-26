@@ -12,12 +12,54 @@
             <loader/>
             <collection id="itemsDc" property="items"/>
         </instance>
+        <collection id="companiesDc" class="com.company.st.entity.Company" view="company-view">
+            <loader id="companiesDl">
+                <query>
+                    <![CDATA[select e from st_Company e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="individualsDc" class="com.company.st.entity.Individual" view="individual-view">
+            <loader id="individualsDl">
+                <query>
+                    <![CDATA[select e from st_Individual e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="waybillsDc" class="com.company.st.entity.Waybill" view="waybill-view">
+            <loader id="waybillsDl">
+                <query>
+                    <![CDATA[select e from st_Waybill e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="customersDc" class="com.company.st.entity.Customer" view="customer-view">
+            <loader id="customersDl">
+                <query>
+                    <![CDATA[select e from st_Customer e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="spaceportsDc" class="com.company.st.entity.Spaceport" view="spaceport-view">
+            <loader id="spaceportsDl">
+                <query>
+                    <![CDATA[select e from st_Spaceport e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="carriersDc" class="com.company.st.entity.Carrier" view="carrier-view">
+            <loader id="carriersDl">
+                <query>
+                    <![CDATA[select e from st_Carrier e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="waybillDc">
-            <column width="350px">
+            <column width="500">
                 <textField id="referenceField" property="reference"/>
                 <pickerField id="creatorField" property="creator">
                     <actions>
@@ -25,29 +67,46 @@
                         <action id="clear" type="picker_clear"/>
                     </actions>
                 </pickerField>
-                <pickerField id="shipperField" property="shipper">
+                <radioButtonGroup id="shipperRadio" orientation="horizontal" required="true"/>
+
+                <lookupField id="shipperField" dataContainer="waybillDc" property="shipper" editable="false"/>
+                <radioButtonGroup id="consigneeRadio" orientation="horizontal"/>
+
+                <pickerField id="consigneeField" property="consignee" editable="false" dataContainer="waybillDc" >
                     <actions>
                         <action id="lookup" type="picker_lookup"/>
                         <action id="clear" type="picker_clear"/>
                     </actions>
                 </pickerField>
-                <pickerField id="consigneeField" property="consignee">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
+                <hbox id="departure" caption="msg://hbox.caption">
+                    <lookupField id="planetMoonDep"/>
+                    <pickerField id="departurePlanet" visible="false" dataContainer="spaceportsDc" property="planet">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="departureMoon" visible="false" dataContainer="spaceportsDc" property="moon">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </pickerField>
+                </hbox>
+                <pickerField id="departurePortField" property="departurePort" dataContainer="waybillsDc" visible="false">
                 </pickerField>
-                <pickerField id="departurePortField" property="departurePort">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <pickerField id="destinationPortField" property="destinationPort">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
+                <hbox id="destination" caption="Destination">
+                    <lookupField id="planetMoonDes"/>
+                    <pickerField id="destinationPlanet" visible="false" dataContainer="spaceportsDc" property="planet">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </pickerField>
+                    <pickerField id="destinationMoon" visible="false" dataContainer="spaceportsDc" property="moon">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </pickerField>
+                </hbox>
+                <pickerField id="destinationPortField" property="destinationPort" visible="false">
                 </pickerField>
                 <pickerField id="carrierField" property="carrier">
                     <actions>

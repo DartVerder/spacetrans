@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "ID", referencedColumnName = "ID")
 @Table(name = "ST_COMPANY")
 @Entity(name = "st_Company")
-@NamePattern("%s|registrationId")
+@NamePattern("%s|name")
 public class Company extends Customer {
     private static final long serialVersionUID = 8159731181693766843L;
 
