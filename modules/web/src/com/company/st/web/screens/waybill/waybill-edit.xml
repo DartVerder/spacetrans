@@ -115,7 +115,7 @@
                         </actions>
                     </pickerField>
                 </hbox>
-                <pickerField id="departurePortField" property="departurePort" dataContainer="waybillsDc" visible="false">
+                <pickerField id="departurePortField" property="departurePort" dataContainer="waybillDc">
                 </pickerField>
                 <hbox id="destination" caption="Destination">
                     <lookupField id="planetMoonDes"/>
@@ -130,7 +130,8 @@
                         </actions>
                     </pickerField>
                 </hbox>
-                <pickerField id="destinationPortField" property="destinationPort" visible="false">
+                <pickerField id="destinationPortField" property="destinationPort"
+                             dataContainer="waybillDc">
                     <actions>
                         <action id="lookup" type="picker_lookup"/>
                         <action id="clear" type="picker_clear"/>

@@ -70,6 +70,10 @@ public class Waybill extends StandardEntity {
         return items;
     }
 
+    public void setItems(List<WaybillItem> items) {
+        this.items=items;
+    }
+
     public Carrier getCarrier() {
         return carrier;
     }

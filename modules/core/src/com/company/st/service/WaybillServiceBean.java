@@ -50,11 +50,9 @@ public class WaybillServiceBean implements WaybillService {
             if(waybill.getShipper()!=null&&waybill.getShipper().getGrade()!=null)
             {
                 CustomerGrade grade  =waybill.getShipper().getGrade();
-                Double res =dataManager.loadValue("select e.value from st_Discounts e where e.grade = :grade", BigDecimal.class)
+                BigDecimal discount =dataManager.loadValue("select e.value from st_Discount e where e.grade = :grade", BigDecimal.class)
                         .parameter("grade", grade.getId())
-                        .one().doubleValue();
-
-                BigDecimal discount = new BigDecimal(res);
+                        .one();
                 discount=discount.subtract(BigDecimal.valueOf(100)).negate().multiply(BigDecimal.valueOf(0.01));
                 total = total.multiply(discount);
             }

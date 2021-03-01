@@ -249,6 +249,14 @@ public class WaybillEdit extends StandardEditor<Waybill> {
                 planetMoonDep.setValue(1);
                 departureMoon.setValue(departurePortField.getValue().getMoon());
             }
+            if(destinationPortField.getValue()!=null)
+            {
+                if(departurePortField.getValue().equals(destinationPortField.getValue()))
+                {
+                    departurePortField.setValue(null);
+                    throw new RuntimeException("The destination port is equal to the department port! Please choose different values for department and destination");
+                }
+            }
         }
 
     }
@@ -262,6 +270,14 @@ public class WaybillEdit extends StandardEditor<Waybill> {
             } else if (destinationPortField.getValue().getMoon() != null) {
                 planetMoonDes.setValue(1);
                 destinationMoon.setValue(destinationPortField.getValue().getMoon());
+            }
+            if(departurePortField.getValue()!=null)
+            {
+                if(departurePortField.getValue().equals(destinationPortField.getValue()))
+                {
+                    destinationPortField.setValue(null);
+                    throw new RuntimeException("The destination port is equal to the departure port! Please choose different values for departure and destination");
+                }
             }
         }
 
@@ -277,7 +293,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         if(shipper!=null&&tmp!=null&&shipper.getValue()!=null&&tmp.getValue()!=null&&shipper.getValue().equals(tmp.getValue()))
         {
             tmp.setValue(null);
-            throw new RuntimeException("The shipper is equal to the consignee! Please choose different values for sender and consignee");
+            throw new RuntimeException("The shipper is equal to the consignee! Please choose different values for shipper and consignee");
         }
         else {
             main.setValue(tmp.getValue());
@@ -300,7 +316,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         if(consigneeField.getValue()!=null&&consigneeField.getValue().equals(shipperField.getValue()))
         {
             shipperField.setValue(null);
-            throw new RuntimeException("The shipper is equal to the consignee! Please choose different values for sender and consignee");
+            throw new RuntimeException("The shipper is equal to the consignee! Please choose different values for shipper and consignee");
         }
 
 
