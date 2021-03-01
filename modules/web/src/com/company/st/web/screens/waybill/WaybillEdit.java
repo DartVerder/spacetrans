@@ -60,8 +60,6 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     @Inject
     private TextField<Double> totalWeightField;
     @Inject
-    private CollectionPropertyContainer<WaybillItem> itemsDc;
-    @Inject
     private InstanceContainer<Waybill> waybillDc;
     @Inject
     private PickerField<Customer> consigneeField;
@@ -70,7 +68,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     @Inject
     private PickerField consigneeField0;
     @Inject
-    private Notifications notifications;
+    private LookupField<Carrier> carrierField;
 
 
     @Subscribe("shipperRadio")
@@ -126,6 +124,11 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         }
     }
 
+    private void initNumber()
+    {
+
+    }
+
     @Subscribe
     protected void onInit(InitEvent event) {
         Map<String, Integer> map = new LinkedHashMap<>();
@@ -142,18 +145,12 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     }
 
-    private void carrierY (Spaceport one, Spaceport two)
-    {
-        one.getId();
-        List<Carrier> carriers=new ArrayList<>();
-        //..res
 
-    }
-
-    private void carriersList (Spaceport one, Spaceport two, List<Carrier> res)
+    private void carriersList (Spaceport one, Spaceport two)
     {
+
         if (carriersDc != null) {
-            res=new ArrayList<>();
+            List<Carrier> res=new ArrayList<>();
             List<Carrier> carriers= carriersDc.getItems();
             for(Carrier c:carriers) {
                 if (c.getPorts().contains(one)) {
@@ -162,11 +159,10 @@ public class WaybillEdit extends StandardEditor<Waybill> {
                     }
                 }
             }
+            carrierField.setOptionsList(res);
+            carrierField.setEditable(true);
         }
-
     }
-
-
 
     private void visible (PickerField var0,PickerField var1,LookupField lookup)
     {
@@ -256,6 +252,11 @@ public class WaybillEdit extends StandardEditor<Waybill> {
                     departurePortField.setValue(null);
                     throw new RuntimeException("The destination port is equal to the department port! Please choose different values for department and destination");
                 }
+                else
+                {
+                    carriersList(destinationPortField.getValue(),departurePortField.getValue());
+                }
+
             }
         }
 
@@ -277,6 +278,10 @@ public class WaybillEdit extends StandardEditor<Waybill> {
                 {
                     destinationPortField.setValue(null);
                     throw new RuntimeException("The destination port is equal to the departure port! Please choose different values for departure and destination");
+                }
+                else
+                {
+                    carriersList(destinationPortField.getValue(),departurePortField.getValue());
                 }
             }
         }
@@ -321,14 +326,5 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
 
     }
-
-
-
-
-
-
-
-
-
 
 }

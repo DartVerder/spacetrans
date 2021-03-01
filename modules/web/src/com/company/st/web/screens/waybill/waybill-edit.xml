@@ -137,12 +137,8 @@
                         <action id="clear" type="picker_clear"/>
                     </actions>
                 </pickerField>
-                <pickerField id="carrierField" property="carrier">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
+                <lookupField id="carrierField" property="carrier" editable="false">
+                </lookupField>
                 <textField id="totalChargeField" property="totalCharge"/>
                 <textField id="totalWeightField" property="totalWeight"/>
             </column>
