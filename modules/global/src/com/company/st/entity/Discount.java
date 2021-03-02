@@ -7,6 +7,8 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -19,9 +21,11 @@ public class Discount extends StandardEntity {
     @NumberFormat(pattern = "##.00", decimalSeparator = ".")
     @NotNull
     @Column(name = "VALUE_", nullable = false)
+    @DecimalMin("0")
+    @DecimalMax("100")
     private BigDecimal value;
 
-    @Column(name = "GRADE", nullable = false)
+    @Column(name = "GRADE", nullable = false, unique = true)
     @NotNull
     private Integer grade;
 

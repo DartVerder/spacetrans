@@ -61,7 +61,7 @@
         <form id="form" dataContainer="waybillDc">
             <column width="500">
                 <textField id="referenceField" property="reference"/>
-                <pickerField id="creatorField" property="creator">
+                <pickerField id="creatorField" property="creator" required="true" editable="false">
                     <actions>
                         <action id="lookup" type="picker_lookup"/>
                         <action id="clear" type="picker_clear"/>
@@ -149,17 +149,20 @@
                     <action id="create" type="create"/>
                     <action id="edit" type="edit"/>
                     <action id="remove" type="remove"/>
+
                 </actions>
                 <columns>
+                    <column id="number"/>
                     <column id="name"/>
                     <column id="weight"/>
                     <column id="charge"/>
-
                 </columns>
                 <buttonsPanel>
                     <button action="itemsTable.create"/>
                     <button action="itemsTable.edit"/>
                     <button action="itemsTable.remove"/>
+                    <button id="Up" caption="msg://Up.caption" enable="false"/>
+                    <button id="Down" caption="msg://Down.caption" enable="false"/>
                 </buttonsPanel>
             </table>
         </groupBox>

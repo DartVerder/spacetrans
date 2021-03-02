@@ -4,7 +4,7 @@
         caption="msg://waybillItemBrowse.caption"
         focusComponent="waybillItemsTable"
         messagesPack="com.company.st.web.screens.waybillitem">
-    <data readOnly="true">
+    <data readOnly="false">
         <collection id="waybillItemsDc"
                     class="com.company.st.entity.WaybillItem"
                     view="waybillItem-view">
@@ -33,7 +33,7 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="number"/>
+                <column id="number" />
                 <column id="name"/>
                 <column id="weight"/>
                 <column id="dim.length"/>

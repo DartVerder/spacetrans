@@ -7,7 +7,7 @@
     <data readOnly="true">
         <collection id="moonsDc"
                     class="com.company.st.entity.Moon">
-            <view extends="_local"/>
+            <view extends="moon-view"/>
             <loader id="moonsDl">
                 <query>
                     <![CDATA[select e from st_Moon e]]>
@@ -35,6 +35,9 @@
             <columns>
                 <column id="name"/>
                 <column id="mass"/>
+                <column id="picture"/>
+                <column id="planet"/>
+                <column id="atmosphere"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

@@ -3,14 +3,18 @@ package com.company.st.entity;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.EmbeddedParameters;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
+import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@PublishEntityChangedEvents
 @Table(name = "ST_SPACEPORT")
 @Entity(name = "st_Spaceport")
 @NamePattern("%s|name")
+@Listeners("st_SpaceportChangedListener")
 public class Spaceport extends StandardEntity {
     private static final long serialVersionUID = 7517097062192848773L;
 

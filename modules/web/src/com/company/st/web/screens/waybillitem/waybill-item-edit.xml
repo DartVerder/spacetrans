@@ -12,13 +12,19 @@
         <instance id="waybillDc" class="com.company.st.entity.Waybill" view="waybill-view">
             <loader id="waybillDl"/>
         </instance>
+        <collection id="waybillItemsDc" class="com.company.st.entity.WaybillItem" view="waybillItem-view">
+            <loader id="waybillItemsDl">
+                <query>
+                    <![CDATA[select e from st_WaybillItem e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="waybillItemDc">
             <column width="350px">
-                <textField id="numberField" property="number"/>
                 <textField id="nameField" property="name"/>
                 <textField id="weightField" property="weight"/>
                 <textField id="dimLengthField" property="dim.length"/>

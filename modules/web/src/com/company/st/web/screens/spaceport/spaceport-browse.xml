@@ -4,7 +4,7 @@
         caption="msg://spaceportBrowse.caption"
         focusComponent="spaceportsTable"
         messagesPack="com.company.st.web.screens.spaceport">
-    <data readOnly="true">
+    <data readOnly="false">
         <collection id="spaceportsDc" class="com.company.st.entity.Spaceport" view="spaceport-view">
             <loader id="spaceportsDl">
                 <query>
@@ -29,6 +29,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
             </actions>
             <columns>
                 <column id="name"/>
@@ -42,6 +43,7 @@
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn" action="spaceportsTable.create"/>
+                <button id="refreshBtn" action="spaceportsTable.refresh"/>
                 <button id="editBtn" action="spaceportsTable.edit"/>
                 <button id="removeBtn" action="spaceportsTable.remove"/>
             </buttonsPanel>

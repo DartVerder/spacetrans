@@ -1,9 +1,11 @@
 package com.company.st.web.screens.planet;
 
 import com.company.st.service.CsvService;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.FileStorageException;
+import com.haulmont.cuba.core.global.FluentValueLoader;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.*;
 import com.haulmont.cuba.gui.screen.*;
@@ -15,10 +17,7 @@ import org.slf4j.Logger;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 
 @UiController("st_Planet.browse")
@@ -44,53 +43,51 @@ public class PlanetBrowse extends StandardLookup<Planet> {
     private DataComponents dataComponents;
     @Inject
     private GroupTable<Planet> planetsTable;
-    @Inject
-    private Image planetImage;
 
-    private void processfile(File file)
-    {
+
+    private void processfile(File file) {
         int defLength, newLength;
-        List<Planet> defaultPlanetList= planetsDc.getMutableItems();
-        List<Planet> planetList = null;
+        List<Planet> defaultPlanetList = dataManager.load(Planet.class).list();
+        List<Planet> planetList = new ArrayList<>();
         try {
-            planetList=csvService.getPlanets(file);
+            planetList = csvService.getPlanets(file);
         } catch (IOException ioException) {
             log.error("Error", ioException);
         }
-        assert planetList != null;
-        newLength = planetList.size();
-        Planet newPlanet, defPlanet;
-        boolean change=false;
-        for(int i =0;i<newLength; i++)
-        {
-            defLength = defaultPlanetList.size();
-            newPlanet = planetList.get(i);
-
-            for(int j=0;j<defLength;j++)
-            {
-                defPlanet = defaultPlanetList.get(j);
-                change=newPlanet.getName().equals(defPlanet.getName());
-                if(change) {
-                    defPlanet=dataContext.merge(defPlanet);
-                    planetsDc.getMutableItems().set(j,newPlanet);
-                    dataContext.setModified(defPlanet,true);
-                    break;
+        if (planetList != null) {
+            Planet planet;
+            boolean change = false;
+                 for(Planet newPlanet:planetList) {
+                     for(Planet defPlanet:defaultPlanetList) {
+                         if (newPlanet.getName().equals(defPlanet.getName())) {
+                             planetField(defPlanet,newPlanet);
+                             change=true;
+                             dataManager.commit(defPlanet);
+                             break;
+                         }
+                     }
+                     if(!change) {
+                         planet = dataManager.create(Planet.class);
+                         planetField(planet,newPlanet);
+                         dataManager.commit(planet);
+                     }
+                     change=false;
+                    }
+                    dataManager.commit();
                 }
-            }
-            if(!change) {
-                newPlanet = dataContext.merge(newPlanet);
-                planetsDc.getMutableItems().add(newPlanet);
-            }
-            else
-                change=false;
-        }
+            getScreenData().loadAll();
 
-        dataContext.commit();
-        getScreenData().loadAll();
     }
 
 
-
+    private void planetField(Planet planet,Planet newPlanet) {
+        planet.setName(newPlanet.getName());
+        planet.setMass(newPlanet.getMass());
+        planet.setSemiMajorAxis(newPlanet.getSemiMajorAxis());
+        planet.setOrbitalPeriod(newPlanet.getOrbitalPeriod());
+        planet.setRotationPeriod(newPlanet.getRotationPeriod());
+        planet.setRings(newPlanet.getRings());
+    }
 
     @Subscribe("uploadField")
     public void onUploadFieldFileUploadSucceed(FileUploadField.FileUploadSucceedEvent event) {

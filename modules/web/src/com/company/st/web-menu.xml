@@ -7,7 +7,6 @@
         <item screen="st_Planet.browse" caption="mainMsg://menu_config.st_Planet.browse"/>
         <item screen="st_Spaceport.browse" caption="mainMsg://menu_config.st_Spaceport.browse"/>
         <item screen="st_Moon.browse" caption="mainMsg://menu_config.st_Moon.browse"/>
-        <item screen="st_WaybillItem.browse" caption="mainMsg://menu_config.st_WaybillItem.browse"/>
         <item screen="st_Carrier.browse" caption="mainMsg://menu_config.st_Carrier.browse"/>
         <item screen="st_Waybill.browse" caption="mainMsg://menu_config.st_Waybill.browse"/>
         <item screen="st_Company.browse" caption="mainMsg://menu_config.st_Company.browse"/>

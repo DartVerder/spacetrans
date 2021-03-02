@@ -18,8 +18,7 @@ import java.math.BigDecimal;
 public class WaybillItem extends StandardEntity {
     private static final long serialVersionUID = 5178883424732340774L;
 
-    @Column(name = "NUMBER_", nullable = false, unique = true)
-    @NotNull
+    @Column(name = "NUMBER_")
     private Integer number;
 
     @NotNull
@@ -45,6 +44,10 @@ public class WaybillItem extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WAYBILL_ID")
     private Waybill waybill;
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 
     public Dimensions getDim() {
         return dim;

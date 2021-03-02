@@ -6,6 +6,7 @@ import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Table(name = "ST_MOON")
 @Entity(name = "st_Moon")
@@ -13,8 +14,9 @@ import javax.persistence.*;
 public class Moon extends AstronimicBody {
     private static final long serialVersionUID = 6317174489669302873L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PLANET_ID")
+    @NotNull
     private Planet planet;
 
     @Composition

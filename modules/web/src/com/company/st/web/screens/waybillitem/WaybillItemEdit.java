@@ -5,12 +5,16 @@ import com.company.st.service.WaybillService;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.st.entity.WaybillItem;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @UiController("st_WaybillItem.edit")
 @UiDescriptor("waybill-item-edit.xml")
@@ -23,6 +27,10 @@ public class WaybillItemEdit extends StandardEditor<WaybillItem> {
     private TextField<BigDecimal> chargeField;
     @Inject
     private InstanceContainer<Waybill> waybillDc;
+    @Inject
+    private CollectionContainer<WaybillItem> waybillItemsDc;
+    @Inject
+    private TextField<Integer> numberField;
 
     @Subscribe("dimLengthField")
     public void onDimLengthFieldValueChange(HasValue.ValueChangeEvent<Double> event) {

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 @Component(WaybillItemBean.NAME)
@@ -34,4 +35,5 @@ public class WaybillItemBean {
         }
 
     }
+
 }

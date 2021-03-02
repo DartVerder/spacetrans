@@ -3,6 +3,8 @@ package com.company.st.web.screens.waybill;
 import com.company.st.entity.*;
 import com.company.st.service.WaybillService;
 import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.Events;
+import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
@@ -12,6 +14,7 @@ import com.haulmont.cuba.gui.model.CollectionPropertyContainer;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.web.App;
+import com.sun.el.stream.Stream;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -69,6 +72,38 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     private PickerField consigneeField0;
     @Inject
     private LookupField<Carrier> carrierField;
+    @Inject
+    private CollectionPropertyContainer<WaybillItem> itemsDc;
+    @Inject
+    private Button Up;
+    @Inject
+    private Button Down;
+    @Inject
+    private Table<WaybillItem> itemsTable;
+    @Inject
+    private UserSessionSource userSessionSource;
+
+    @Subscribe
+    public void onInit(InitEvent event) {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        map.put("Company", 0);
+        map.put("Individual", 1);
+        shipperRadio.setOptionsMap(map);
+        consigneeRadio.setOptionsMap(map);
+
+        Map<String, Integer> planetmoon = new LinkedHashMap<>();
+        planetmoon.put("Planet",0);
+        planetmoon.put("Moon",1);
+        planetMoonDep.setOptionsMap(planetmoon);
+        planetMoonDes.setOptionsMap(planetmoon);
+    }
+
+    @Subscribe
+    public void onInitEntity(InitEntityEvent<Waybill> event) {
+        Waybill waybill = event.getEntity();
+        waybill.setCreator(userSessionSource.getUserSession().getUser());
+    }
+
 
 
     @Subscribe("shipperRadio")
@@ -123,28 +158,6 @@ public class WaybillEdit extends StandardEditor<Waybill> {
             setConsignee(consigneeField1,consigneeField,shipperField);
         }
     }
-
-    private void initNumber()
-    {
-
-    }
-
-    @Subscribe
-    protected void onInit(InitEvent event) {
-        Map<String, Integer> map = new LinkedHashMap<>();
-        map.put("Company", 0);
-        map.put("Individual", 1);
-        shipperRadio.setOptionsMap(map);
-        consigneeRadio.setOptionsMap(map);
-
-        Map<String, Integer> planetmoon = new LinkedHashMap<>();
-        planetmoon.put("Planet",0);
-        planetmoon.put("Moon",1);
-        planetMoonDep.setOptionsMap(planetmoon);
-        planetMoonDes.setOptionsMap(planetmoon);
-
-    }
-
 
     private void carriersList (Spaceport one, Spaceport two)
     {
@@ -224,6 +237,32 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         defaultPort((Moon)destinationMoon.getValue(),destinationPortField);
     }
 
+    @Subscribe("destinationPortField")
+    public void onDestinationPortFieldValueChange(HasValue.ValueChangeEvent<Spaceport> event) {
+        if(destinationPortField.getValue()!=null) {
+            if (destinationPortField.getValue().getPlanet() != null) {
+                planetMoonDes.setValue(0);
+                destinationPlanet.setValue(destinationPortField.getValue().getPlanet());
+            } else if (destinationPortField.getValue().getMoon() != null) {
+                planetMoonDes.setValue(1);
+                destinationMoon.setValue(destinationPortField.getValue().getMoon());
+            }
+            if(departurePortField.getValue()!=null)
+            {
+                if(departurePortField.getValue().equals(destinationPortField.getValue()))
+                {
+                    destinationPortField.setValue(null);
+                    throw new RuntimeException("The destination port is equal to the departure port! Please choose different values for departure and destination");
+                }
+                else
+                {
+                    carriersList(destinationPortField.getValue(),departurePortField.getValue());
+                }
+            }
+        }
+
+    }
+
     @Subscribe("departureMoon")
     public void onDepartureMoonValueChange(HasValue.ValueChangeEvent<Moon> event) {
         defaultPort((Moon)departureMoon.getValue(),departurePortField);
@@ -262,35 +301,24 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     }
 
-    @Subscribe("destinationPortField")
-    public void onDestinationPortFieldValueChange(HasValue.ValueChangeEvent<Spaceport> event) {
-        if(destinationPortField.getValue()!=null) {
-            if (destinationPortField.getValue().getPlanet() != null) {
-                planetMoonDes.setValue(0);
-                destinationPlanet.setValue(destinationPortField.getValue().getPlanet());
-            } else if (destinationPortField.getValue().getMoon() != null) {
-                planetMoonDes.setValue(1);
-                destinationMoon.setValue(destinationPortField.getValue().getMoon());
-            }
-            if(departurePortField.getValue()!=null)
-            {
-                if(departurePortField.getValue().equals(destinationPortField.getValue()))
-                {
-                    destinationPortField.setValue(null);
-                    throw new RuntimeException("The destination port is equal to the departure port! Please choose different values for departure and destination");
-                }
-                else
-                {
-                    carriersList(destinationPortField.getValue(),departurePortField.getValue());
-                }
-            }
-        }
 
-    }
     @Subscribe(id = "itemsDc", target = Target.DATA_CONTAINER)
     public void onItemsDcCollectionChange(CollectionContainer.CollectionChangeEvent<WaybillItem> event) {
-        totalChargeField.setValue(AppBeans.get(WaybillService.class).totalCharge(waybillDc.getItem()));
-        totalWeightField.setValue(AppBeans.get(WaybillService.class).totalWeight(waybillDc.getItem()));
+        if(itemsDc.getItems().size()!=0) {
+            totalChargeField.setValue(AppBeans.get(WaybillService.class).totalCharge(waybillDc.getItem()));
+            totalWeightField.setValue(AppBeans.get(WaybillService.class).totalWeight(waybillDc.getItem()));
+            if (itemsDc.getItems().size() > 1) {
+                Up.setEnabled(true);
+                Down.setEnabled(true);
+            } else {
+                Up.setEnabled(false);
+                Down.setEnabled(false);
+            }
+            List<WaybillItem> items = itemsDc.getMutableItems();
+            for (WaybillItem item : items) {
+                item.setNumber(items.indexOf(item)+1);
+            }
+        }
     }
 
     private void setConsignee(PickerField tmp, PickerField main, LookupField shipper)
@@ -326,5 +354,42 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
 
     }
+
+    @Subscribe("Up")
+    public void onUpClick(Button.ClickEvent event) {
+        List<WaybillItem> newWaybillItems = new ArrayList<>(itemsDc.getItems());
+        WaybillItem selected = itemsTable.getSingleSelected();
+        int id = newWaybillItems.indexOf(selected);
+        if (id > 0){
+            WaybillItem prev = newWaybillItems.get(id-1);
+            newWaybillItems.set(id, prev);
+            prev.setNumber(id+1);
+            newWaybillItems.set(id-1, selected);
+            selected.setNumber(id);
+        }
+        itemsDc.setItems(newWaybillItems);
+    }
+
+    @Subscribe("Down")
+    public void onDownClick(Button.ClickEvent event) {
+        List<WaybillItem> newWaybillItems = new ArrayList<>(itemsDc.getItems());
+        WaybillItem selected = itemsTable.getSingleSelected();
+        int id = newWaybillItems.indexOf(selected);
+        if (id < newWaybillItems.size()){
+            WaybillItem next = newWaybillItems.get(id+1);
+            newWaybillItems.set(id, next);
+            next.setNumber(id+1);
+            newWaybillItems.set(id+1, selected);
+            selected.setNumber(id+2);
+        }
+        itemsDc.setItems(newWaybillItems);
+    }
+
+
+
+
+
+
+
 
 }

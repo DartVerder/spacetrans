@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service(WaybillService.NAME)
 public class WaybillServiceBean implements WaybillService {
@@ -41,7 +42,7 @@ public class WaybillServiceBean implements WaybillService {
     {
         BigDecimal total = new BigDecimal(0);
 
-        if(waybill!=null&&waybill.getItems()!=null)
+        if(waybill!=null&&waybill.getItems()!=null&& waybill.getItems().size()!=0)
         {
             for(WaybillItem w: waybill.getItems())
             {
@@ -49,12 +50,32 @@ public class WaybillServiceBean implements WaybillService {
             }
             if(waybill.getShipper()!=null&&waybill.getShipper().getGrade()!=null)
             {
-                CustomerGrade grade  =waybill.getShipper().getGrade();
-                BigDecimal discount =dataManager.loadValue("select e.value from st_Discount e where e.grade = :grade", BigDecimal.class)
-                        .parameter("grade", grade.getId())
-                        .one();
-                discount=discount.subtract(BigDecimal.valueOf(100)).negate().multiply(BigDecimal.valueOf(0.01));
-                total = total.multiply(discount);
+                try{
+                    CustomerGrade grade  =waybill.getShipper().getGrade();
+                    List<Discount> discounts=dataManager.load(Discount.class).list();
+                    BigDecimal discount=new BigDecimal(-1);
+                    if(discounts.size()==0)
+                    {
+                        throw new RuntimeException("Please indicate in the discount table the " +
+                                "value of the corresponding discounts");
+                    }
+                    for(Discount dis: discounts)
+                    {
+                        if(dis.getGrade()==grade)
+                            discount=dis.getValue();
+                    }
+                    if(discount.equals(BigDecimal.valueOf(-1)))
+                        throw new RuntimeException("Please indicate in the discount table the " +
+                                "value of this discount: "+grade.toString());
+
+                    discount=discount.subtract(BigDecimal.valueOf(100)).negate().multiply(BigDecimal.valueOf(0.01));
+                    total = total.multiply(discount);
+                }
+                catch (RuntimeException e){
+                    throw new RuntimeException("Please indicate in the discount table the " +
+                            "value of the corresponding discounts", e);
+                }
+
             }
         }
 
@@ -66,7 +87,7 @@ public class WaybillServiceBean implements WaybillService {
     {
         Double total = 0.0;
 
-        if(waybill!=null&&waybill.getItems()!=null)
+        if(waybill!=null&&waybill.getItems()!=null&&waybill.getItems().size()>0)
         {
             for(WaybillItem w: waybill.getItems())
             {

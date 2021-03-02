@@ -64,7 +64,7 @@ create table ST_MOON (
     MASS double precision,
     PICTURE_ID uuid,
     --
-    PLANET_ID uuid,
+    PLANET_ID uuid not null,
     ATMOSPHERE_ID uuid,
     --
     primary key (ID)
@@ -205,7 +205,7 @@ create table ST_WAYBILL_ITEM (
     DIM_WIDTH double precision not null,
     DIM_HEIGHT double precision not null,
     --
-    NUMBER_ integer not null,
+    NUMBER_ integer,
     NAME varchar(255) not null,
     WEIGHT double precision not null,
     CHARGE decimal(19, 2),
