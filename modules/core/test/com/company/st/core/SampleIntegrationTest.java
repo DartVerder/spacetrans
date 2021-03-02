@@ -1,17 +1,22 @@
 package com.company.st.core;
 
 import com.company.st.StTestContainer;
+import com.company.st.entity.*;
+import com.company.st.service.WaybillServiceBean;
 import com.haulmont.cuba.core.EntityManager;
 import com.haulmont.cuba.core.Persistence;
 import com.haulmont.cuba.core.Transaction;
 import com.haulmont.cuba.core.TypedQuery;
 import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.security.entity.User;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SampleIntegrationTest {
@@ -32,6 +37,7 @@ public class SampleIntegrationTest {
 
     @AfterAll
     public static void afterAll() throws Exception {
+
     }
 
     @Test
@@ -45,5 +51,87 @@ public class SampleIntegrationTest {
             tx.commit();
             Assertions.assertEquals(1, users.size());
         }
+    }
+
+    @Test
+    public void testWaybillCreate()
+    {
+        CommitContext commitContext=new CommitContext();
+        List<Customer> customers= dataManager.load(Customer.class).list();
+        List<Spaceport> spaceports = dataManager.load(Spaceport.class).list();
+        List<User> users = dataManager.load(User.class).list();
+        List<Carrier> carriers = dataManager.load(Carrier.class).list();
+        Waybill waybill = dataManager.create(Waybill.class);
+        waybill.setCreator(users.get(0));
+        waybill.setConsignee(customers.get(0));
+        waybill.setShipper(customers.get(1));
+        waybill.setDeparturePort(spaceports.get(0));
+        waybill.setDestinationPort(spaceports.get(1));
+        waybill.setReference("Waybill Create test");
+        waybill.setCarrier(carriers.get(0));
+
+        List<WaybillItem> waybillItems=new ArrayList<>();
+        for(int i = 1; i<=5;i++)
+        {
+            WaybillItem waybillItem = dataManager.create(WaybillItem.class);
+            waybillItem.setWaybill(waybill);
+            fieldItem(i,waybillItem);
+
+            waybillItems.add(waybillItem);
+            commitContext.addInstanceToCommit(waybillItem);
+        }
+        waybill.setItems(waybillItems);
+        commitContext.addInstanceToCommit(waybill);
+        dataManager.commit(commitContext);
+
+        Assertions.assertEquals(15,waybill.getTotalWeight());
+
+        Assertions.assertEquals(new BigDecimal(9520).stripTrailingZeros(),waybill.getTotalCharge().stripTrailingZeros());
+
+        Assertions.assertEquals(new BigDecimal(160.0).stripTrailingZeros(),waybill.getItems().get(0).getCharge().stripTrailingZeros());
+        Assertions.assertEquals(new BigDecimal(520).stripTrailingZeros(),waybill.getItems().get(1).getCharge().stripTrailingZeros());
+        Assertions.assertEquals(new BigDecimal(1480).stripTrailingZeros(),waybill.getItems().get(2).getCharge().stripTrailingZeros());
+        Assertions.assertEquals(new BigDecimal(3340).stripTrailingZeros(),waybill.getItems().get(3).getCharge().stripTrailingZeros());
+        Assertions.assertEquals(new BigDecimal(6400).stripTrailingZeros(),waybill.getItems().get(4).getCharge().stripTrailingZeros());
+        dataManager.remove(waybill);
+    }
+
+    @Test
+    public void testWaybillUpdateAddItem()
+    {
+        CommitContext commitContext=new CommitContext();
+        Waybill waybill= dataManager.load(Waybill.class).one();
+        BigDecimal totalCharge=waybill.getTotalCharge();
+        Double totalWeight= waybill.getTotalWeight();
+        List<WaybillItem> waybillItems=  waybill.getItems();
+
+        for(int i = 1; i<=5;i++)
+        {
+            WaybillItem waybillItem = dataManager.create(WaybillItem.class);
+            waybillItem.setWaybill(waybill);
+            fieldItem(i,waybillItem);
+
+            waybillItems.add(waybillItem);
+            commitContext.addInstanceToCommit(waybillItem);
+        }
+        waybill.setItems(waybillItems);
+        commitContext.addInstanceToCommit(waybill);
+        dataManager.commit(commitContext);
+
+        Assertions.assertEquals(15,waybill.getTotalWeight());
+        Assertions.assertEquals(new BigDecimal(9520).stripTrailingZeros(),waybill.getTotalCharge().stripTrailingZeros());
+
+    }
+
+    public void fieldItem(int i, WaybillItem waybillItem)
+    {
+        waybillItem.setNumber(i);
+        waybillItem.setName("Test Item "+i);
+        waybillItem.setWeight((double) i);
+        Dimensions dimensions = dataManager.create(Dimensions.class);
+        dimensions.setHeight((double) i);
+        dimensions.setLength((double) i);
+        dimensions.setWidth((double) i);
+        waybillItem.setDim(dimensions);
     }
 }

@@ -89,7 +89,9 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         map.put("Company", 0);
         map.put("Individual", 1);
         shipperRadio.setOptionsMap(map);
+        shipperRadio.setValue(0);
         consigneeRadio.setOptionsMap(map);
+        consigneeRadio.setValue(0);
 
         Map<String, Integer> planetmoon = new LinkedHashMap<>();
         planetmoon.put("Planet",0);
@@ -119,7 +121,6 @@ public class WaybillEdit extends StandardEditor<Waybill> {
             {
                 for(Customer e:customers)
                 {
-
                     if(c.getId().equals(e.getId()))
                     {
                         res.add(e); }

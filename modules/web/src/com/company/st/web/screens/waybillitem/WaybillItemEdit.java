@@ -25,12 +25,7 @@ public class WaybillItemEdit extends StandardEditor<WaybillItem> {
     private InstanceContainer<WaybillItem> waybillItemDc;
     @Inject
     private TextField<BigDecimal> chargeField;
-    @Inject
-    private InstanceContainer<Waybill> waybillDc;
-    @Inject
-    private CollectionContainer<WaybillItem> waybillItemsDc;
-    @Inject
-    private TextField<Integer> numberField;
+
 
     @Subscribe("dimLengthField")
     public void onDimLengthFieldValueChange(HasValue.ValueChangeEvent<Double> event) {

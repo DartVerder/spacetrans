@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class Discount extends StandardEntity {
     private static final long serialVersionUID = -2810378743385215723L;
 
-    @NumberFormat(pattern = "##.00", decimalSeparator = ".")
+    @NumberFormat(pattern = "#0.00", decimalSeparator = ".")
     @NotNull
     @Column(name = "VALUE_", nullable = false)
     @DecimalMin("0")
