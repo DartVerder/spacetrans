@@ -185,6 +185,7 @@ create table ST_WAYBILL (
     DEPARTURE_PORT_ID uuid not null,
     DESTINATION_PORT_ID uuid not null,
     CARRIER_ID uuid,
+    TOTAL_WEIGHT double precision,
     TOTAL_CHARGE decimal(19, 2),
     --
     primary key (ID)

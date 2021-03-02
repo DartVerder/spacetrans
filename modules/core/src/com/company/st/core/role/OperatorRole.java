@@ -13,7 +13,7 @@ import com.haulmont.cuba.security.role.SpecificPermissionsContainer;
 public class OperatorRole extends AnnotatedRoleDefinition {
     public final static String NAME = "operator";
 
-    @ScreenAccess(screenIds = {"st_Moon.browse", "application-st", "st_Planet.browse", "st_Spaceport.browse", "st_Carrier.browse", "st_Discount.browse", "st_Company.browse", "st_Individual.browse", "st_Waybill.browse"})
+    @ScreenAccess(screenIds = {"st_Moon.browse", "application-st", "st_Planet.browse", "st_Spaceport.browse", "st_Carrier.browse", "st_Discount.browse", "st_Company.browse", "st_Individual.browse", "st_Waybill.browse", "st_WaybillItem.edit", "st_WaybillItem.browse", "st_Waybill.edit", "st_Individual.edit", "st_Customer.edit", "st_Customer.browse", "st_Company.edit"})
     @Override
     public ScreenPermissionsContainer screenPermissions() {
         return super.screenPermissions();

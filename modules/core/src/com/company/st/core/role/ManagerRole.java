@@ -4,6 +4,7 @@ import com.company.st.entity.*;
 import com.haulmont.cuba.security.app.role.AnnotatedRoleDefinition;
 import com.haulmont.cuba.security.app.role.annotation.*;
 import com.haulmont.cuba.security.entity.EntityOp;
+import com.haulmont.cuba.security.entity.User;
 import com.haulmont.cuba.security.role.EntityAttributePermissionsContainer;
 import com.haulmont.cuba.security.role.EntityPermissionsContainer;
 import com.haulmont.cuba.security.role.ScreenPermissionsContainer;
@@ -13,12 +14,13 @@ import com.haulmont.cuba.security.role.SpecificPermissionsContainer;
 public class ManagerRole extends AnnotatedRoleDefinition {
     public final static String NAME = "manager";
 
-    @ScreenAccess(screenIds = {"st_Moon.browse", "application-st", "st_Planet.browse", "st_Spaceport.browse", "st_Carrier.browse", "st_Discount.browse", "st_Company.browse", "st_Waybill.browse", "st_Individual.browse"})
+    @ScreenAccess(screenIds = {"st_Moon.browse", "application-st", "st_Planet.browse", "st_Spaceport.browse", "st_Carrier.browse", "st_Discount.browse", "st_Company.browse", "st_Waybill.browse", "st_Individual.browse", "administration", "st_WaybillItem.edit", "st_WaybillItem.browse", "st_Waybill.edit", "st_Spaceport.edit", "st_Planet.edit", "st_Moon.edit", "st_Individual.edit", "st_Gas.edit", "st_Gas.browse", "st_Discount.edit", "st_Customer.edit", "st_Customer.browse", "st_Company.edit", "st_Carrier.edit", "st_AtmosphericGas.edit", "st_Atmosphere.edit", "st_AtmosphericGas.browse", "st_Atmosphere.browse"})
     @Override
     public ScreenPermissionsContainer screenPermissions() {
         return super.screenPermissions();
     }
 
+    @EntityAccess(entityClass = User.class, operations = EntityOp.READ)
     @EntityAccess(entityClass = WaybillItem.class, operations = {EntityOp.CREATE, EntityOp.UPDATE, EntityOp.READ, EntityOp.DELETE})
     @EntityAccess(entityClass = Waybill.class, operations = {EntityOp.CREATE, EntityOp.UPDATE, EntityOp.READ, EntityOp.DELETE})
     @EntityAccess(entityClass = Spaceport.class, operations = {EntityOp.CREATE, EntityOp.UPDATE, EntityOp.READ, EntityOp.DELETE})
@@ -39,6 +41,7 @@ public class ManagerRole extends AnnotatedRoleDefinition {
         return super.entityPermissions();
     }
 
+    @EntityAttributeAccess(entityClass = User.class, view = "*")
     @EntityAttributeAccess(entityClass = WaybillItem.class, modify = "*")
     @EntityAttributeAccess(entityClass = Waybill.class, modify = "*")
     @EntityAttributeAccess(entityClass = Spaceport.class, modify = "*")
