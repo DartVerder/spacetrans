@@ -8,7 +8,6 @@ create index IDX_ST_ATMOSPHERIC_GAS_ON_ATMOSPHERE on ST_ATMOSPHERIC_GAS (ATMOSPH
 alter table ST_MOON add constraint FK_ST_MOON_ON_PLANET foreign key (PLANET_ID) references ST_PLANET(ID)^
 alter table ST_MOON add constraint FK_ST_MOON_ON_ATMOSPHERE foreign key (ATMOSPHERE_ID) references ST_ATMOSPHERE(ID)^
 alter table ST_MOON add constraint FK_ST_MOON_ON_PICTURE foreign key (PICTURE_ID) references SYS_FILE(ID)^
-create unique index IDX_ST_MOON_UK_NAME on ST_MOON (NAME) where DELETE_TS is null ^
 create unique index IDX_ST_MOON_UK_PICTURE_ID on ST_MOON (PICTURE_ID) where DELETE_TS is null ^
 create index IDX_ST_MOON_ON_PLANET on ST_MOON (PLANET_ID)^
 create index IDX_ST_MOON_ON_ATMOSPHERE on ST_MOON (ATMOSPHERE_ID)^
@@ -18,7 +17,6 @@ create index IDX_ST_MOON_ON_PICTURE on ST_MOON (PICTURE_ID)^
 alter table ST_PLANET add constraint FK_ST_PLANET_ON_ATMOSPHERE foreign key (ATMOSPHERE_ID) references ST_ATMOSPHERE(ID)^
 alter table ST_PLANET add constraint FK_ST_PLANET_ON_PICTURE foreign key (PICTURE_ID) references SYS_FILE(ID)^
 create unique index IDX_ST_PLANET_UK_PICTURE_ID on ST_PLANET (PICTURE_ID) where DELETE_TS is null ^
-create unique index IDX_ST_PLANET_UK_NAME on ST_PLANET (NAME) where DELETE_TS is null ^
 create index IDX_ST_PLANET_ON_ATMOSPHERE on ST_PLANET (ATMOSPHERE_ID)^
 create index IDX_ST_PLANET_ON_PICTURE on ST_PLANET (PICTURE_ID)^
 -- end ST_PLANET
@@ -51,7 +49,6 @@ create index IDX_ST_WAYBILL_ON_CARRIER on ST_WAYBILL (CARRIER_ID)^
 -- end ST_WAYBILL
 -- begin ST_WAYBILL_ITEM
 alter table ST_WAYBILL_ITEM add constraint FK_ST_WAYBILL_ITEM_ON_WAYBILL foreign key (WAYBILL_ID) references ST_WAYBILL(ID)^
-create unique index IDX_ST_WAYBILL_ITEM_UK_NAME on ST_WAYBILL_ITEM (NAME) where DELETE_TS is null ^
 create index IDX_ST_WAYBILL_ITEM_ON_WAYBILL on ST_WAYBILL_ITEM (WAYBILL_ID)^
 -- end ST_WAYBILL_ITEM
 -- begin ST_CARRIER_SPACEPORT_LINK

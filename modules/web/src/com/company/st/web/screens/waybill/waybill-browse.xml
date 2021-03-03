@@ -26,11 +26,14 @@
         </filter>
         <groupTable id="waybillsTable"
                     width="100%"
-                    dataContainer="waybillsDc">
+                    dataContainer="waybillsDc" multiselect="true">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="list" type="listPrintForm"/>
+                <action id="runReport" type="runReport"/>
+
             </actions>
             <columns>
                 <column id="reference"/>
@@ -49,6 +52,7 @@
                 <button id="createBtn" action="waybillsTable.create"/>
                 <button id="editBtn" action="waybillsTable.edit"/>
                 <button id="removeBtn" action="waybillsTable.remove"/>
+                <button id="runBtn" action="waybillsTable.runReport"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

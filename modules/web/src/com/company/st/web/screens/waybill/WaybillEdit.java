@@ -8,10 +8,7 @@ import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.*;
-import com.haulmont.cuba.gui.model.CollectionContainer;
-import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.model.CollectionPropertyContainer;
-import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.model.*;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.web.App;
 import com.sun.el.stream.Stream;
@@ -98,6 +95,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         planetmoon.put("Moon",1);
         planetMoonDep.setOptionsMap(planetmoon);
         planetMoonDes.setOptionsMap(planetmoon);
+
     }
 
     @Subscribe
@@ -162,7 +160,6 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     private void carriersList (Spaceport one, Spaceport two)
     {
-
         if (carriersDc != null) {
             List<Carrier> res=new ArrayList<>();
             List<Carrier> carriers= carriersDc.getItems();
@@ -384,6 +381,30 @@ public class WaybillEdit extends StandardEditor<Waybill> {
             selected.setNumber(id+2);
         }
         itemsDc.setItems(newWaybillItems);
+    }
+
+
+    @Subscribe
+    public void onAfterShow(AfterShowEvent event) {
+        if(waybillDc.getItem().getShipper()!=null) {
+            shipperField.setValue(waybillDc.getItem().getShipper());
+            if(waybillDc.getItem().getShipper().getClass().equals(Company.class))
+                shipperRadio.setValue(0);
+            else if(waybillDc.getItem().getShipper().getClass().equals(Individual.class))
+                shipperRadio.setValue(1);
+        }
+        if(waybillDc.getItem().getConsignee()!=null)
+        {
+            if(waybillDc.getItem().getConsignee().getClass().equals(Company.class))
+            {
+                consigneeField0.setValue(waybillDc.getItem().getConsignee());
+                consigneeRadio.setValue(0);
+            }
+            else if(waybillDc.getItem().getConsignee().getClass().equals(Individual.class)) {
+                consigneeField1.setValue(waybillDc.getItem().getConsignee());
+                consigneeRadio.setValue(1);
+            }
+        }
     }
 
 

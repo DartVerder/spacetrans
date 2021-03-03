@@ -10,6 +10,13 @@
             <loader/>
             <instance id="atmosphereDc" property="atmosphere"/>
         </instance>
+        <collection id="moonsDc" class="com.company.st.entity.Moon" view="moon-view">
+            <loader id="moonsDl">
+                <query>
+                    <![CDATA[select e from st_Moon e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>

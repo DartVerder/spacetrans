@@ -22,7 +22,7 @@ public class WaybillItem extends StandardEntity {
     private Integer number;
 
     @NotNull
-    @Column(name = "NAME", nullable = false, unique = true)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Column(name = "WEIGHT", nullable = false)

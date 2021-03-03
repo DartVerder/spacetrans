@@ -7,6 +7,14 @@
         <instance id="planetDc" class="com.company.st.entity.Planet" view="planet-view">
             <loader id="planetDl"/>
         </instance>
+        <collection id="planetsDc" class="com.company.st.entity.Planet">
+            <view extends="_local"/>
+            <loader id="planetsDl">
+                <query>
+                    <![CDATA[select e from st_Planet e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>

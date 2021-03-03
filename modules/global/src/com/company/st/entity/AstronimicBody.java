@@ -13,7 +13,7 @@ public class AstronimicBody extends StandardEntity {
     private static final long serialVersionUID = 2601657095304248804L;
 
     @NotNull
-    @Column(name = "NAME", nullable = false, unique = true)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Column(name = "MASS")

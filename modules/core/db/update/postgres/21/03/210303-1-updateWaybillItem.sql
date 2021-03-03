@@ -1,0 +1,1 @@
+drop index IDX_ST_WAYBILL_ITEM_UK_NAME ;

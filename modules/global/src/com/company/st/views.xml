@@ -38,7 +38,8 @@
             <property name="moon" view="_minimal"/>
         </property>
         <property name="carrier" view="_minimal"/>
-        <property name="items" view="waybillItem-view"/>
+        <property name="items" view="waybillItem-view">
+        </property>
     </view>
     <view entity="st_Planet" name="planet-view" extends="_local">
         <property name="atmosphere" view="_minimal"/>
