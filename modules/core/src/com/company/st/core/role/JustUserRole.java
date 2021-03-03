@@ -1,6 +1,7 @@
 package com.company.st.core.role;
 
 import com.company.st.entity.*;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.security.app.role.AnnotatedRoleDefinition;
 import com.haulmont.cuba.security.app.role.annotation.*;
 import com.haulmont.cuba.security.entity.EntityOp;
@@ -13,12 +14,13 @@ import com.haulmont.cuba.security.role.SpecificPermissionsContainer;
 public class JustUserRole extends AnnotatedRoleDefinition {
     public final static String NAME = "justUser";
 
-    @ScreenAccess(screenIds = {"st_Moon.browse", "application-st", "st_Planet.browse", "st_Spaceport.browse", "st_Carrier.browse", "st_Discount.browse"})
+    @ScreenAccess(screenIds = {"st_Moon.browse", "application-st", "st_Planet.browse", "st_Spaceport.browse", "st_Carrier.browse", "st_Discount.browse", "st_Atmosphere.browse", "st_Atmosphere.edit", "st_AtmosphericGas.browse", "st_AtmosphericGas.edit", "st_Carrier.edit", "st_Spaceport.edit", "st_Planet.edit", "st_Moon.edit", "st_Gas.browse"})
     @Override
     public ScreenPermissionsContainer screenPermissions() {
         return super.screenPermissions();
     }
 
+    @EntityAccess(entityClass = FileDescriptor.class, operations = EntityOp.READ)
     @EntityAccess(entityClass = Spaceport.class, operations = EntityOp.READ)
     @EntityAccess(entityClass = Planet.class, operations = EntityOp.READ)
     @EntityAccess(entityClass = Moon.class, operations = EntityOp.READ)
@@ -34,6 +36,7 @@ public class JustUserRole extends AnnotatedRoleDefinition {
         return super.entityPermissions();
     }
 
+    @EntityAttributeAccess(entityClass = FileDescriptor.class, view = "*")
     @EntityAttributeAccess(entityClass = WaybillItem.class, view = "*")
     @EntityAttributeAccess(entityClass = Waybill.class, view = "*")
     @EntityAttributeAccess(entityClass = Spaceport.class, view = "*")

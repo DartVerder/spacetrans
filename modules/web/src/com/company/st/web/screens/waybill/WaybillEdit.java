@@ -373,7 +373,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         List<WaybillItem> newWaybillItems = new ArrayList<>(itemsDc.getItems());
         WaybillItem selected = itemsTable.getSingleSelected();
         int id = newWaybillItems.indexOf(selected);
-        if (id < newWaybillItems.size()){
+        if (id < newWaybillItems.size()-1){
             WaybillItem next = newWaybillItems.get(id+1);
             newWaybillItems.set(id, next);
             next.setNumber(id+1);

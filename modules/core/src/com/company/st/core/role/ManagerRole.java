@@ -1,6 +1,7 @@
 package com.company.st.core.role;
 
 import com.company.st.entity.*;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.security.app.role.AnnotatedRoleDefinition;
 import com.haulmont.cuba.security.app.role.annotation.*;
 import com.haulmont.cuba.security.entity.EntityOp;
@@ -20,6 +21,7 @@ public class ManagerRole extends AnnotatedRoleDefinition {
         return super.screenPermissions();
     }
 
+    @EntityAccess(entityClass = FileDescriptor.class, operations = {EntityOp.CREATE, EntityOp.UPDATE, EntityOp.READ, EntityOp.DELETE})
     @EntityAccess(entityClass = User.class, operations = EntityOp.READ)
     @EntityAccess(entityClass = WaybillItem.class, operations = {EntityOp.CREATE, EntityOp.UPDATE, EntityOp.READ, EntityOp.DELETE})
     @EntityAccess(entityClass = Waybill.class, operations = {EntityOp.CREATE, EntityOp.UPDATE, EntityOp.READ, EntityOp.DELETE})
@@ -41,6 +43,7 @@ public class ManagerRole extends AnnotatedRoleDefinition {
         return super.entityPermissions();
     }
 
+    @EntityAttributeAccess(entityClass = FileDescriptor.class, modify = "*")
     @EntityAttributeAccess(entityClass = User.class, view = "*")
     @EntityAttributeAccess(entityClass = WaybillItem.class, modify = "*")
     @EntityAttributeAccess(entityClass = Waybill.class, modify = "*")

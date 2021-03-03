@@ -27,7 +27,7 @@ public class MoonEdit extends StandardEditor<Moon> {
         Moon newMoon=moonDc.getItem();
         for(Moon m:moons)
         {
-            if(m.getName().equals(newMoon.getName()))
+            if(m.getName().equals(newMoon.getName())&&!m.getId().equals(newMoon.getId()))
                 throw new RuntimeException("\n" +
                         "Please change the name of the Moon. This name already exists");
         }

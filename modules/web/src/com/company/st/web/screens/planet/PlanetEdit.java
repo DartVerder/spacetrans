@@ -26,7 +26,7 @@ public class PlanetEdit extends StandardEditor<Planet> {
         Planet newPlanet=planetDc.getItem();
         for(Planet planet:planets)
         {
-            if(planet.getName().equals(newPlanet.getName()))
+            if(planet.getName().equals(newPlanet.getName())&&!planet.getId().equals(newPlanet.getId()))
                 throw new RuntimeException("\n" +
                         "Please change the name of the Planet. This name already exists");
         }
